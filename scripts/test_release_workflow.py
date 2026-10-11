@@ -34,6 +34,37 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "${{ inputs.tag || github.ref_name }}",
         )
 
+    def test_authentication_split_and_missing_secret(self):
+        producer = yaml.load((ROOT / ".github/workflows/release-pr.yml").read_text(), Loader=yaml.BaseLoader)
+        steps = producer["jobs"]["release-please"]["steps"]
+        guard, release, release_pr = steps
+        self.assertEqual(guard["env"]["RELEASE_PLZ_TOKEN"], "${{ secrets.RELEASE_PLZ_TOKEN }}")
+        self.assertEqual(release["with"]["token"], "${{ github.token }}")
+        self.assertEqual(release["with"]["skip-github-pull-request"], "true")
+        self.assertEqual(release_pr["with"]["token"], "${{ secrets.RELEASE_PLZ_TOKEN }}")
+        self.assertEqual(release_pr["with"]["skip-github-release"], "true")
+        for value, ok in [(None, False), ("", False), ("fixture-credential", True)]:
+            with self.subTest(secret=value is not None):
+                env = {"PATH": "/usr/bin:/bin"}
+                if value is not None:
+                    env["RELEASE_PLZ_TOKEN"] = value
+                result = subprocess.run(["/bin/bash", "-c", guard["run"]], env=env, capture_output=True, text=True)
+                self.assertEqual(result.returncode == 0, ok)
+                self.assertNotIn("fixture-credential", result.stdout + result.stderr)
+
+    def test_release_pr_updates_the_declared_version_files(self):
+        config = json.loads((ROOT / "release-please-config.json").read_text())
+        manifest = json.loads((ROOT / ".release-please-manifest.json").read_text())
+        self.assertEqual(config["release-type"], "simple")
+        self.assertTrue(config["draft"])
+        self.assertTrue(config["force-tag-creation"])
+        self.assertIn({"type": "generic", "path": "ns.ttl"}, config["packages"]["."]["extra-files"])
+        version = (ROOT / "version.txt").read_text().strip()
+        self.assertEqual(manifest["."], version)
+        target = (ROOT / "ns.ttl").read_text()
+        self.assertIn("x-release-please-version", target)
+        self.assertIn(version, target)
+
     def test_draft_publication_and_failures(self):
         workflow = yaml.load(
             (ROOT / ".github/workflows/release.yml").read_text(),

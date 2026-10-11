@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.6.1](https://github.com/scbrown/quechua/compare/v0.6.0...v0.6.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* **release:** publish versioned profiles through release PRs ([#11](https://github.com/scbrown/quechua/issues/11)) ([eea34c3](https://github.com/scbrown/quechua/commit/eea34c39a737a3bcc42065573b75351af4b830b0))
+
 ## [Unreleased]
 
 ## [0.6.0] - 2026-10-08

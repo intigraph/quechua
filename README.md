@@ -121,3 +121,18 @@ CI runs the `Validate vocabulary` check on every pull request, without path
 filters, and on pushes to main. Dependencies are pinned in the script lockfile.
 This checks the repository artifacts; deployed HTTP responses need a separate
 hosting check.
+
+## Release delivery
+
+Release PRs update the catalog version, version file and changelog together.
+A merged release PR creates a draft and a version tag, then the same workflow
+runs the existing catalog, shapes and trim checks at that tag. Only after the
+checksum-listed assets are uploaded does the draft become public. This avoids
+depending on a second workflow from a tag created with the workflow token.
+
+The producer uses the repository workflow token and requires permission to
+create release PRs. A token or permission refusal is a failed delivery, not a
+reason to hand-tag a release. Tag-triggered publication remains a recovery
+path. Existing published releases are never overwritten by the PR path.
+
+Publishing vocabulary assets does not activate shapes or migrate instances.

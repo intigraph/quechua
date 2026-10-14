@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.7.0] - Unreleased
+
+- Add the explicit governance profile and AdmissionPolicy declaration from the
+  retained 0.7.0 specification; new source implementation, no recovered lineage.
+- Record optional AdmissionPolicy and directive refinement alignments without
+  activating policies or loading alignments automatically.
+
 ## [0.6.1](https://github.com/scbrown/quechua/compare/v0.6.0...v0.6.1) (2026-10-11)
 
 

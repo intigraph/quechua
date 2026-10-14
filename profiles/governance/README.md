@@ -27,3 +27,13 @@ is not an automatic bootstrap or alignment import.
 Source review, certification, release publication and native consumer adoption
 are separate steps. A resource declaration does not provide execution authority,
 policy precedence, exemption approval, an enforcement promotion or a load window.
+
+## Source version and release ownership
+
+The source catalogue retains the last released version until release-please
+creates its version PR. This feature is unreleased; it does not pre-advance the
+release manifest, catalogue version or changelog. The retained resource manifest
+identifies the 0.7.0 specification artifact, not a newly published release.
+Compare a new 0.7.0 package to that specification only after the normal producer
+has staged and published that exact version. This source branch does not claim
+a fresh 0.7.0 pendant or certificate.

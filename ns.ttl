@@ -454,3 +454,6 @@
 <https://scbrown.github.io/quechua/ns#version> a rdf:Property ; rdfs:label "version" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/softwareVersion> .
 <https://scbrown.github.io/quechua/ns#visitDate> a rdf:Property ; rdfs:label "visitDate" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#year> a rdf:Property ; rdfs:label "year" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/datePublished> .
+<https://scbrown.github.io/quechua/ns#AdmissionPolicy> a rdfs:Class ; rdfs:label "AdmissionPolicy" .
+<https://scbrown.github.io/quechua/ns#refines> a rdf:Property ; rdfs:label "refines" .
+<https://scbrown.github.io/quechua/ns#contradicts> a rdf:Property ; rdfs:label "contradicts" .

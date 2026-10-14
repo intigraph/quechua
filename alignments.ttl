@@ -11,6 +11,8 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 
+quechua:AdmissionPolicy rdfs:subClassOf odrl:Policy .
+
 quechua:Blocker rdfs:subClassOf prov:Entity .
 
 quechua:CertifiedShareBundle skos:closeMatch dcat:Dataset .
@@ -84,6 +86,8 @@ quechua:WorkflowDefinition rdfs:subClassOf prov:Plan .
 quechua:WorkflowRun rdfs:subClassOf prov:Activity .
 
 quechua:issuedBy skos:closeMatch cred:issuer .
+
+quechua:refines rdfs:subPropertyOf prov:wasRevisionOf .
 
 quechua:result skos:closeMatch sosa:hasResult .
 

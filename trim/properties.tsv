@@ -310,3 +310,5 @@ verifier	KEEP	none		no public parent
 version	DROP	isReplacedBy	schema:softwareVersion	
 visitDate	INFRA			
 year	DROP	isReplacedBy	schema:datePublished	
+refines	KEEP	subPropertyOf	prov:wasRevisionOf	revised directive preserves substantial original content and existing obligations while adding precision or narrower admissible behavior; no retirement or priority inference
+contradicts	KEEP	none		same-context instructions cannot jointly be satisfied; records unresolved conflict, not its resolution; no equivalent established by the bounded standards review

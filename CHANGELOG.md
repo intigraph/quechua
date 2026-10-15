@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.7.0](https://github.com/scbrown/quechua/compare/v0.6.1...v0.7.0) (2026-10-15)
+
+
+### Features
+
+* **governance:** add complete explicit profile and boundary controls ([#13](https://github.com/scbrown/quechua/issues/13)) ([4578cce](https://github.com/scbrown/quechua/commit/4578cce6e1ed76de64ad28a7cb8f465319495b62))
+
 ## [0.6.1](https://github.com/scbrown/quechua/compare/v0.6.0...v0.6.1) (2026-10-11)
 
 

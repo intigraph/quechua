@@ -88,6 +88,13 @@ covers tracker lifetimes, activities, calendar entries and point observations,
 with an offline reference resolver. Adoption is explicit; publishing this file
 does not change serving shapes or existing producers.
 
+## Scheduled jobs
+
+The opt-in [scheduled-job profile](profiles/scheduled-jobs/README.md) uses
+Schema.org Event, Schedule and Action for recurring operational work. Its
+validator checks an example and individual refusal cases, including unrelated
+data controls. Publishing it does not load a store policy or activate jobs.
+
 ## Releases and pinning
 
 The Pages copy of `ns.ttl` follows `main` and changes without notice. To pin,

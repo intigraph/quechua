@@ -34,3 +34,5 @@ jobs:
         run: uv run --locked --script scripts/check_governance_profile.py
       - name: Validate valid-time projection contracts
         run: python3 -m unittest discover -s tests -v
+      - name: Validate scheduled-job profile and refusal controls
+        run: uv run --locked --script scripts/check_scheduled_jobs.py

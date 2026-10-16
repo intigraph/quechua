@@ -1,0 +1,14 @@
+Script started on 2026-10-16 03:24:00-04:00 [COMMAND="stty -onlcr python3 docs/demos/stable-namespace-release/reproduce.py" <not executed on terminal>]
+BASE 04071d1b4340692d0b33ed5aca856dd3b994efce: release catalogs = ['ns.ttl']
+CANDIDATE: release catalogs = ['ns.ttl', 'ns-stable.ttl']
+$ uv run --locked --script scripts/publish_stable_namespace.py --selftest
+PASS: exact namespace boundary; literal language/datatype preserved
+PASS refusal: missing
+PASS refusal: mispaired
+PASS refusal: foreign
+PASS refusal: literal
+PASS refusal: html
+PASS release bump; stale candidate version refused
+PASS: 449 terms, 1868 candidate triples; legacy files unchanged
+
+Script done on 2026-10-16 03:24:02-04:00 [COMMAND_EXIT_CODE="0"]

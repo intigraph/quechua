@@ -1,0 +1,13 @@
+Script started on 2026-10-16 02:57:09-04:00 [COMMAND="stty -onlcr python3 docs/demos/stable-namespace/reproduce.py" <not executed on terminal>]
+BASE 1c48fe1fc135fd2200b99919e0390fffa0b43654: legacy catalog present; candidate catalog absent
+CANDIDATE: exact mapped graph and one-to-one legacy identity links
+$ uv run --locked --script scripts/publish_stable_namespace.py --selftest
+PASS: exact namespace boundary; literal language/datatype preserved
+PASS refusal: missing
+PASS refusal: mispaired
+PASS refusal: foreign
+PASS refusal: literal
+PASS refusal: html
+PASS: 449 terms, 1868 candidate triples; legacy files unchanged
+
+Script done on 2026-10-16 02:57:10-04:00 [COMMAND_EXIT_CODE="0"]

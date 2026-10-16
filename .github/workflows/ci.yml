@@ -24,6 +24,8 @@ jobs:
           enable-cache: false
       - name: Validate catalog and failure controls
         run: uv run --locked --script scripts/check_catalog.py --selftest
+      - name: Validate candidate stable namespace and identity controls
+        run: uv run --locked --script scripts/publish_stable_namespace.py --selftest
       - name: Verify release publication boundaries
         run: uv run --locked --script scripts/test_release_workflow.py
       - name: Validate shapes, examples and failure controls

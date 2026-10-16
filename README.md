@@ -6,6 +6,22 @@ A shared vocabulary for knowledge, governance, and code intelligence.
 - Prefix: `quechua:`
 - [Human-readable catalog](https://scbrown.github.io/quechua/ns)
 - [Turtle vocabulary](https://scbrown.github.io/quechua/ns.ttl)
+
+### Candidate stable namespace
+
+The proposed permanent namespace is `https://w3id.org/tallygraph/quechua/ns#`.
+Redirect registration is pending; these identifiers are not yet advertised as
+resolvable. The additive [candidate Turtle catalog](ns-stable.ttl) and
+[HTML catalog](ns-stable.html) preserve every declaration and annotation,
+with explicit one-to-one `owl:sameAs` links from the existing identifiers.
+The existing catalog documents and consumers' stored identifiers are unchanged.
+This publication does not install aliases into a consumer or migrate its data.
+
+Regenerate and verify the candidate representations after a catalog change:
+
+```sh
+uv run --locked --script scripts/publish_stable_namespace.py --write --selftest
+```
 - [Work-item SHACL shapes](https://scbrown.github.io/quechua/shapes/work-item.shapes.ttl)
 - [Action governance SHACL shapes](https://scbrown.github.io/quechua/shapes/action-governance.shapes.ttl)
 - [Observation governance SHACL shapes](https://scbrown.github.io/quechua/shapes/observation-governance.shapes.ttl)

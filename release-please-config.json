@@ -11,6 +11,10 @@
         {
           "type": "generic",
           "path": "ns.ttl"
+        },
+        {
+          "type": "generic",
+          "path": "ns-stable.ttl"
         }
       ]
     }

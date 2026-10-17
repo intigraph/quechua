@@ -38,3 +38,5 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Validate scheduled-job profile and refusal controls
         run: uv run --locked --script scripts/check_scheduled_jobs.py
+      - name: Validate opt-in data catalog and exact admission controls
+        run: uv run --locked --script scripts/check_data_catalog.py

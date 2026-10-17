@@ -1,0 +1,3 @@
+
+# Preserve the byte-exact util-linux terminal recording.
+profiles/data-catalog/demo-output.log -text whitespace=cr-at-eol

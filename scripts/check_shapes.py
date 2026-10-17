@@ -25,9 +25,14 @@ OG = Namespace("https://example.org/graph/")
 ACTION = Namespace("https://example.org/actions/")
 SCHEMA = Namespace("https://schema.org/")
 SOSA = Namespace("http://www.w3.org/ns/sosa/")
+DCAT = Namespace("http://www.w3.org/ns/dcat#")
+DCT = Namespace("http://purl.org/dc/terms/")
+PUBLIC_CLASSES = {SCHEMA.Action, SCHEMA.SoftwareSourceCode, SOSA.Observation,
+                  DCAT.Catalog, DCAT.Dataset, DCAT.DatasetSeries,
+                  DCAT.Distribution, DCAT.DataService}
 # The Quipu engine's own namespace, for its derivation properties.
 QUIPU = Namespace("http://quipu.dev/ontology/")
-ALLOWED = (NAMESPACE, str(SH), str(RDF), str(RDFS), str(XSD), str(QUIPU), str(SCHEMA), str(SOSA))
+ALLOWED = (NAMESPACE, str(SH), str(RDF), str(RDFS), str(XSD), str(QUIPU), str(SCHEMA), str(SOSA), str(DCAT), str(DCT))
 # Public shapes must not carry private infrastructure names.
 FORBIDDEN = re.compile(
     r"\.(lan|svc|local|internal)\b|\b(10|192\.168|172\.(1[6-9]|2\d|3[01]))\.\d+\.\d+",
@@ -319,7 +324,7 @@ def check_terms(path: Path, shapes: Graph, classes: set, properties: set, root: 
     shape_names = set(shapes.subjects(RDF.type, SH.NodeShape))
     with (root / "vocab/SOURCES.tsv").open() as handle:
         rows = csv.DictReader((line for line in handle if not line.startswith("#")), delimiter="\t")
-        sources = [row for row in rows if row["prefix"] in {"schema", "sosa"}]
+        sources = [row for row in rows if row["prefix"] in {"schema", "sosa", "dcat", "dcterms"}]
     public_terms = set()
     for source in sources:
         public_terms.update((root / "vocab" / f"{source['name']}.terms").read_text().split())
@@ -329,12 +334,12 @@ def check_terms(path: Path, shapes: Graph, classes: set, properties: set, root: 
                 raise ValueError(
                     f"{path.name}: IRI outside the allowed namespaces: {term}"
                 )
-            if isinstance(term, URIRef) and str(term).startswith((str(SCHEMA), str(SOSA))) and str(term) not in public_terms:
+            if isinstance(term, URIRef) and str(term).startswith((str(SCHEMA), str(SOSA), str(DCAT), str(DCT))) and str(term) not in public_terms:
                 raise ValueError(f"{path.name}: term not defined by pinned public vocabulary: {term}")
     for cls in set(shapes.objects(None, SH.targetClass)) | set(
         shapes.objects(None, SH["class"])
     ):
-        if cls not in classes and cls not in {SCHEMA.Action, SOSA.Observation}:
+        if cls not in classes and cls not in PUBLIC_CLASSES:
             raise ValueError(f"{path.name}: class not declared in ns.ttl: {cls}")
     for prop in set(shapes.objects(None, SH.path)) | set(
         shapes.objects(None, SH.targetSubjectsOf)
@@ -455,7 +460,27 @@ def selftest(root: Path) -> None:
                 print(f"Rejected invalid shapes: {name}")
             else:
                 raise ValueError(f"control {name} was accepted")
-    print(f"{len(mutations)} invalid-shapes controls rejected")
+    data_catalog = root / "shapes" / "data-catalog.shapes.ttl"
+    if data_catalog.is_file():
+        text = data_catalog.read_text()
+        for name, original_term, bad_term in (
+            ("undefined-dcat-class", "dcat:Dataset", "dcat:NoSuchDataset"),
+            ("undefined-dct-property", "dct:accessRights", "dct:NoSuchRights"),
+            ("undefined-schema-property", "schema:sha256", "schema:NoSuchDigest"),
+        ):
+            mutated = text.replace(original_term, bad_term, 1)
+            if mutated == text:
+                raise ValueError(f"control {name} did not change its fixture")
+            with tempfile.TemporaryDirectory(prefix="quechua-public-terms-") as tmp:
+                scratch = Path(tmp) / data_catalog.name
+                scratch.write_text(mutated)
+                try:
+                    check_terms(scratch, Graph().parse(scratch), classes, properties, root)
+                except ValueError:
+                    print(f"Rejected invalid shapes: {name}")
+                else:
+                    raise ValueError(f"control {name} was accepted")
+    print(f"{len(mutations)} existing invalid-shapes controls rejected; public catalog controls checked")
 
 
 if __name__ == "__main__":

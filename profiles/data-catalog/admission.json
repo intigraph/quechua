@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "iri": "https://example.org/data-map/events",
+      "role": "Dataset"
+    },
+    {
+      "iri": "https://example.org/data-map/snapshot",
+      "role": "Distribution"
+    },
+    {
+      "iri": "https://example.org/data-map/service",
+      "role": "Service"
+    },
+    {
+      "iri": "https://example.org/data-map/query",
+      "role": "Query"
+    }
+  ],
+  "queries": [
+    {
+      "iri": "https://example.org/data-map/query",
+      "revision": "example-1",
+      "sha256": "5f339b7c0dec427df5c7628c5329b85d9c61616b0eb862e2a63a29f82fe66996",
+      "sources": [
+        "https://example.org/data-map/snapshot"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+
+# Standard vocabulary governance is permissive. These declarations introduce no
+# distribution, query-text or ownership obligations on general public metadata.
+q:CatalogVocabularyShape a sh:NodeShape; sh:targetClass dcat:Catalog .
+q:DatasetSeriesVocabularyShape a sh:NodeShape; sh:targetClass dcat:DatasetSeries .
+q:DatasetVocabularyShape a sh:NodeShape; sh:targetClass dcat:Dataset .
+q:DistributionVocabularyShape a sh:NodeShape; sh:targetClass dcat:Distribution .
+q:DataServiceVocabularyShape a sh:NodeShape; sh:targetClass dcat:DataService .
+q:SourceCodeVocabularyShape a sh:NodeShape; sh:targetClass schema:SoftwareSourceCode .
+
+# Opt in by dct:conformsTo naming the corresponding shape IRI. Every subject of
+# conformsTo is tested, including untyped nodes. Other profiles remain outside
+# this profile. Exact admission separately requires the marker on expected IRIs.
+
+q:DataCatalogDatasetShape a sh:NodeShape;
+ sh:targetSubjectsOf dct:conformsTo;
+ sh:or (
+  [ sh:not [ sh:property [ sh:path dct:conformsTo; sh:hasValue q:DataCatalogDatasetShape ] ] ]
+  [ sh:node q:DataCatalogDatasetConstraints ]
+ ) .
+q:DataCatalogDatasetConstraints a sh:NodeShape;
+ sh:nodeKind sh:IRI;
+ sh:class dcat:Dataset;
+ sh:property [ sh:path dct:title; sh:minCount 1; sh:nodeKind sh:Literal; sh:minLength 1 ];
+ sh:property [ sh:path q:ownedBy; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ];
+ sh:property [ sh:path dcat:distribution; sh:nodeKind sh:IRI; sh:class dcat:Distribution; sh:minCount 1 ];
+ sh:property [ sh:path dct:accessRights; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ] .
+
+q:DataCatalogDistributionShape a sh:NodeShape;
+ sh:targetSubjectsOf dct:conformsTo;
+ sh:or (
+  [ sh:not [ sh:property [ sh:path dct:conformsTo; sh:hasValue q:DataCatalogDistributionShape ] ] ]
+  [ sh:node q:DataCatalogDistributionConstraints ]
+ ) .
+q:DataCatalogDistributionConstraints a sh:NodeShape;
+ sh:nodeKind sh:IRI;
+ sh:class dcat:Distribution;
+ sh:property [ sh:path dcat:accessURL; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ];
+ sh:property [ sh:path dcat:mediaType; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ];
+ sh:property [ sh:path dct:conformsTo; sh:nodeKind sh:IRI; sh:minCount 2 ];
+ sh:property [ sh:path dct:modified; sh:datatype xsd:dateTime; sh:minCount 1; sh:maxCount 1 ];
+ sh:property [ sh:path dct:accessRights; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ] .
+
+q:DataCatalogServiceShape a sh:NodeShape;
+ sh:targetSubjectsOf dct:conformsTo;
+ sh:or (
+  [ sh:not [ sh:property [ sh:path dct:conformsTo; sh:hasValue q:DataCatalogServiceShape ] ] ]
+  [ sh:node q:DataCatalogServiceConstraints ]
+ ) .
+q:DataCatalogServiceConstraints a sh:NodeShape;
+ sh:nodeKind sh:IRI;
+ sh:class dcat:DataService;
+ sh:property [ sh:path dcat:endpointURL; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ];
+ sh:property [ sh:path dcat:servesDataset; sh:nodeKind sh:IRI; sh:class dcat:Dataset; sh:minCount 1 ];
+ sh:property [ sh:path dct:accessRights; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ] .
+
+q:DataCatalogQueryShape a sh:NodeShape;
+ sh:targetSubjectsOf dct:conformsTo;
+ sh:or (
+  [ sh:not [ sh:property [ sh:path dct:conformsTo; sh:hasValue q:DataCatalogQueryShape ] ] ]
+  [ sh:node q:DataCatalogQueryConstraints ]
+ ) .
+q:DataCatalogQueryConstraints a sh:NodeShape;
+ sh:nodeKind sh:IRI;
+ sh:class schema:SoftwareSourceCode;
+ sh:property [ sh:path schema:programmingLanguage; sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1; sh:minLength 1 ];
+ sh:property [ sh:path schema:text; sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1; sh:minLength 1 ];
+ sh:property [ sh:path schema:version; sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1; sh:minLength 1 ];
+ sh:property [ sh:path schema:sha256; sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1; sh:pattern "^[0-9a-f]{64}$" ];
+ sh:property [ sh:path dct:requires; sh:nodeKind sh:IRI; sh:class dcat:Distribution; sh:minCount 1 ];
+ sh:property [ sh:path dct:accessRights; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ] .

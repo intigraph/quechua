@@ -1,0 +1,29 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+
+# Publication does not activate a profile or grant query execution authority.
+q:DataCatalogDatasetShape a sh:NodeShape ; sh:targetClass dcat:Dataset ;
+ sh:property [ sh:path dct:title ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+ sh:property [ sh:path dct:publisher ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dct:accessRights ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dcat:distribution ; sh:class dcat:Distribution ; sh:minCount 1 ] .
+q:DataCatalogDistributionShape a sh:NodeShape ; sh:targetClass dcat:Distribution ;
+ sh:property [ sh:path dcat:accessURL ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dcat:mediaType ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+ sh:property [ sh:path dct:conformsTo ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dct:modified ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dct:accessRights ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] .
+q:DataCatalogServiceShape a sh:NodeShape ; sh:targetClass dcat:DataService ;
+ sh:property [ sh:path dcat:endpointURL ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+ sh:property [ sh:path dcat:servesDataset ; sh:class dcat:Dataset ; sh:minCount 1 ] ;
+ sh:property [ sh:path dct:accessRights ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] .
+q:DataCatalogQueryShape a sh:NodeShape ; sh:targetClass schema:SoftwareSourceCode ;
+ sh:property [ sh:path schema:programmingLanguage ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+ sh:property [ sh:path schema:text ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+ sh:property [ sh:path schema:version ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+ sh:property [ sh:path dct:requires ; sh:class dcat:Distribution ; sh:minCount 1 ] ;
+ sh:property [ sh:path dct:accessRights ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] .

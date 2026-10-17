@@ -1,0 +1,12 @@
+Script started on 2026-10-17 02:33:22-04:00 [COMMAND="uv run --locked --script scripts/check_data_catalog.py --help > /dev/null && uv run --with rdflib==7.1.4 --with pyshacl==0.30.1 python profiles/data-catalog/demo.py" <not executed on terminal>]
+WITHHELD proposal30 fixture versus corrected source profile (not installed behavior)
+ordinary repository code: before=False after=True
+general Catalog subclass: before=False after=True
+strict complete positive: True
+untyped marked incomplete query: False (expected refusal)
+sha256 tests/fixtures/data-catalog-proposal30.ttl 639f9b7a35766a310472846201aa201aeada78778d523ab64bdb314a7671ab80
+sha256 shapes/data-catalog.shapes.ttl 57edf07bf3cc6b206ab2e778599d696f9d8a48291a517e6799a880470cf086b7
+sha256 scripts/check_data_catalog.py 3949358633d37b1e5add1a5f4eea9ef3be2e39191d5b0e1bd66f5559806dc564
+sha256 scripts/check_shapes.py 6559e0dcecf1c3c8482a80274c637b6f8cf22b8e64a7e99f0e084dfc3bcc17ce
+
+Script done on 2026-10-17 02:33:22-04:00 [COMMAND_EXIT_CODE="0"]

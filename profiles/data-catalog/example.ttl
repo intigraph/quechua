@@ -1,0 +1,20 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix s: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://example.org/data-map/> .
+ex:events a dcat:Dataset; dct:conformsTo q:DataCatalogDatasetShape;
+ dct:title "Stop event projection"@en, "Projection des événements"@fr;
+ q:ownedBy ex:operator; dct:publisher ex:publisher; dct:accessRights ex:restricted;
+ dcat:distribution ex:snapshot .
+ex:snapshot a dcat:Distribution; dct:conformsTo q:DataCatalogDistributionShape, ex:EventSchema;
+ dcat:accessURL <https://example.org/data/events.json>;
+ dcat:mediaType <https://www.iana.org/assignments/media-types/application/json>;
+ dct:modified "2026-10-17T00:00:00Z"^^xsd:dateTime; dct:accessRights ex:restricted .
+ex:service a dcat:DataService; dct:conformsTo q:DataCatalogServiceShape;
+ dcat:endpointURL <https://example.org/data/>; dcat:servesDataset ex:events; dct:accessRights ex:restricted .
+ex:query a s:SoftwareSourceCode; dct:conformsTo q:DataCatalogQueryShape;
+ s:programmingLanguage "DuckDBSQL"; s:text "SELECT event_owner, count(*) AS events FROM stop_events GROUP BY event_owner";
+ s:version "example-1"; s:sha256 "5f339b7c0dec427df5c7628c5329b85d9c61616b0eb862e2a63a29f82fe66996";
+ dct:requires ex:snapshot; dct:accessRights ex:restricted .

@@ -111,6 +111,15 @@ Schema.org Event, Schedule and Action for recurring operational work. Its
 validator checks an example and individual refusal cases, including unrelated
 data controls. Publishing it does not load a store policy or activate jobs.
 
+## Data catalog
+
+The [data-map profile](profiles/data-catalog/README.md) uses public DCAT3 and
+Schema.org types. General Catalog, DatasetSeries and source-code metadata remain
+permissive; strict constraints require an explicit `dct:conformsTo` shape marker.
+An offline admission reference additionally requires that marker and exact
+query/source identities, including when removing a marker avoids a SHACL target.
+Publishing this profile neither loads a store policy nor authorizes SQL or reads.
+
 ## Releases and pinning
 
 The Pages copy of `ns.ttl` follows `main` and changes without notice. To pin,

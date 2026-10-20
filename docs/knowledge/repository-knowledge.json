@@ -1,0 +1,98 @@
+{
+  "source_revision": "2374dd5f9c37aaeec13f85a326f7d17e39ca0bb8",
+  "reviewed_at": "2026-10-20T23:10:58.215405Z",
+  "max_age_seconds": 2592000,
+  "records": [
+    {
+      "kind": "idea",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#a-thin-profile-over-public-vocabularies",
+      "summary": "Quechua keeps governance and trust concepts not already covered by public vocabularies; other concepts remain public terms with explicit pointers.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "type": "Concept"
+    },
+    {
+      "kind": "interface",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#shapes",
+      "summary": "The repository ships opt-in SHACL profiles for Actions, Observations, work items and trusted knowledge records. Publishing shapes does not activate them.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "properties": {
+        "interfaceKind": "file-format",
+        "publicName": "Quechua SHACL profiles"
+      }
+    },
+    {
+      "kind": "interface",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#releases-and-pinning",
+      "summary": "Immutable versioned Turtle assets and SHA256SUMS bind a release to its catalog version; the Pages copy follows main and is not a pin.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "properties": {
+        "interfaceKind": "file-format",
+        "publicName": "Versioned Turtle vocabulary assets"
+      }
+    },
+    {
+      "kind": "interface",
+      "source": "scripts/build-repository-share.py",
+      "subject": "http://aegis.gastown.local/ontology/code/quechua/scripts%2Fbuild-repository-share.py",
+      "summary": "The repository-owned pendant builder uses the Bobbin indexer and Quipu share/import engine; publication policy stays on the trusted host.",
+      "source_sha256": "6c43d977837ce09489937e44af8efe7a99376aaee0c39fb3f3dd641d5572e7d3",
+      "properties": {
+        "interfaceKind": "file-format",
+        "publicName": "Repository pendant asset triplet"
+      },
+      "depends_on": [
+        "http://aegis.gastown.local/ontology/repo_bobbin",
+        "http://aegis.gastown.local/ontology/code/quipu/src%2Flib.rs"
+      ]
+    },
+    {
+      "kind": "decision",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#candidate-stable-namespace",
+      "summary": "The README records a candidate namespace with redirect registration pending; it explicitly preserves existing identifiers and does not install aliases or migrate data. This source proposal makes no resolver decision.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "type": "DecisionRecord",
+      "properties": {
+        "status": "proposed",
+        "supersessionStatus": "not-recorded-in-source"
+      },
+      "see_also": [
+        "https://scbrown.github.io/quechua/ns#Decision"
+      ]
+    },
+    {
+      "kind": "start-here",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md",
+      "summary": "Start with the repository README and current namespace links; distinguish published declarations from explicit consumer adoption.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "properties": {
+        "startHereOrder": 1,
+        "glossaryTerm": "https://scbrown.github.io/quechua/ns#Concept"
+      }
+    },
+    {
+      "kind": "start-here",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#validation",
+      "summary": "Use the pinned catalog, shape, trim and profile checks before changing vocabulary assets.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "properties": {
+        "startHereOrder": 2
+      }
+    },
+    {
+      "kind": "start-here",
+      "source": "README.md",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md#releases-and-pinning",
+      "summary": "Use immutable checksum-listed release artifacts for pinned consumers; publication does not activate policy.",
+      "source_sha256": "959cb935832cc7b1f2ff457e36b6f5afcd522324fae6244480591cc6cef29604",
+      "properties": {
+        "startHereOrder": 3
+      }
+    }
+  ]
+}

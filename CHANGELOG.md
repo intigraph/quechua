@@ -10,6 +10,14 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.9.0](https://github.com/scbrown/quechua/compare/v0.8.0...v0.9.0) (2026-10-21)
+
+
+### Features
+
+* add verified one-line install and concise stack guide ([#21](https://github.com/scbrown/quechua/issues/21)) ([59279cc](https://github.com/scbrown/quechua/commit/59279cc2c36fcb54ff296db15e6bc31eb700c5ca))
+* **scheduled-jobs:** admit weekly local-time declarations ([#23](https://github.com/scbrown/quechua/issues/23)) ([99d813c](https://github.com/scbrown/quechua/commit/99d813ce5038a7f2070955e30e57095a7651edf1))
+
 ## [0.8.0](https://github.com/scbrown/quechua/compare/v0.7.0...v0.8.0) (2026-10-17)
 
 

@@ -1,170 +1,62 @@
 # Quechua
 
-A shared vocabulary for knowledge, governance, and code intelligence.
+Shared vocabulary and SHACL shapes for the Quipu stack. Reuse public terms,
+validate the shape of knowledge, and preserve stable namespace identifiers.
 
-- Namespace: `https://scbrown.github.io/quechua/ns#`
-- Prefix: `quechua:`
-- [Human-readable catalog](https://scbrown.github.io/quechua/ns)
-- [Turtle vocabulary](https://scbrown.github.io/quechua/ns.ttl)
-
-### Candidate stable namespace
-
-The proposed permanent namespace is `https://w3id.org/tallygraph/quechua/ns#`.
-Redirect registration is pending; these identifiers are not yet advertised as
-resolvable. The additive [candidate Turtle catalog](ns-stable.ttl) and
-[HTML catalog](ns-stable.html) preserve every declaration and annotation,
-with explicit one-to-one `owl:sameAs` links from the existing identifiers.
-The existing catalog documents and consumers' stored identifiers are unchanged.
-This publication does not install aliases into a consumer or migrate its data.
-
-Regenerate and verify the candidate representations after a catalog change:
+## Install
 
 ```sh
-uv run --locked --script scripts/publish_stable_namespace.py --write --selftest
+curl -fsSL https://raw.githubusercontent.com/scbrown/quechua/main/install.sh | sh
 ```
-- [Work-item SHACL shapes](https://scbrown.github.io/quechua/shapes/work-item.shapes.ttl)
-- [Action governance SHACL shapes](https://scbrown.github.io/quechua/shapes/action-governance.shapes.ttl)
-- [Observation governance SHACL shapes](https://scbrown.github.io/quechua/shapes/observation-governance.shapes.ttl)
-- [Camayoc SHACL shapes](https://scbrown.github.io/quechua/shapes/camayoc.shapes.ttl)
-- [Ontology SHACL shapes](https://scbrown.github.io/quechua/shapes/ontology.shapes.ttl)
-- [Alignments to public vocabularies](https://scbrown.github.io/quechua/alignments.ttl)
 
-The catalog declares 136 classes and 310 properties extracted from
-the loaded shape sets. It is an initial publication, not a complete validation
-schema. Publishing these declarations does not migrate a store, enable
-inference, or change instance identifiers.
+Python 3.9+, curl, and a Linux or macOS shell. Downloads and verifies the latest vocabulary and shapes into
+`~/.local/share/quechua/TAG`. This is a data package, not an executable.
 
-Instance identifiers remain independent of the vocabulary namespace. Existing
-integrations need compatibility checks before changing the terms they use.
+Set `STACK_INSTALL_ROOT` on the receiving shell for another prefix.
+Pinned releases, alternatives, configuration and removal are in the
+[installation and usage reference](docs/installation-reference.md).
 
-## A thin profile over public vocabularies
+## Try it
 
-Quechua keeps only the terms no public vocabulary covers: governance and trust
-(verdicts, verification, attestations, certification), decisions and their
-precedents, blockers and how they resolve, golden paths and trajectories,
-failure knowledge, and workflow runs checked against their definitions.
-Everything else is a public term with a pointer to it. The preference order is
-a W3C Recommendation, then schema.org, then another public vocabulary.
+Inspect the vocabulary and shape files without loading a running graph:
 
-Each term's decision is a row in `trim/classes.tsv` or `trim/properties.tsv`
-(see [trim/README.md](trim/README.md)):
+```sh
+ls "$HOME/.local/share/quechua"/v*/*.ttl
+```
 
-- **Kept** terms are aligned to their nearest public parent or match in
-  `alignments.ttl` (`rdfs:subClassOf`, `rdfs:subPropertyOf`, `skos:closeMatch`).
-  The alignments are a separate file because subclass axioms are inferential:
-  loading them changes what a store's type queries return, so a consumer opts in.
-- **Replaced** terms stay declared in `ns.ttl`, marked `owl:deprecated true`
-  with `dcterms:isReplacedBy` naming the public term to use instead.
-- **Homelab-specific** terms stay declared and deprecated, with a comment and
-  no public replacement.
+Choose the required shapes from the [vocabulary guide](docs/installation-reference.md)
+before admitting data. Installing files does not change your graph.
 
-No term is removed, so every published IRI still resolves. The replacement
-targets are checked offline against pinned term lists in `vocab/`, derived from
-the sources and sha256 digests in `vocab/SOURCES.tsv`.
+## Next steps
 
-## Shapes
+- [Tambo](https://github.com/scbrown/tambo): guided stack installation and verification.
+- [Camayoc](https://github.com/scbrown/camayoc): governed memory and vocabulary.
+- [Detailed examples and agent setup](docs/installation-reference.md).
 
-`action-governance.shapes.ttl` applies Quechua's provenance, terminal outcome,
-and blocker constraints to public `schema:Action` records. Its blocker targets
-must also be Actions. Tracker status, priority, revisions, comments, and calendar
-mechanics belong in a separate tracker profile. Loading this governance profile
-requires every Action in the validation scope to carry `sourceKind`; publication
-alone does not enable it in a store.
+**Load this repository’s graph:** public repository-pendant assets have not yet been verified. When a release supplies the archive, checksum and provenance, follow the [verified import workflow](https://scbrown.github.io/quipu/sharing/index.html): extract the share directory and use `quipu import SHARE_DIR --db repository.db`. Import stages knowledge; ROOT stays unchanged.
 
-`observation-governance.shapes.ttl` applies the same provenance floor to
-`sosa:Observation`. Specialized Steps and UsageRecords retain their Quechua
-types: a Step must also assert `schema:Action`, and a UsageRecord must also
-assert `sosa:Observation`. Their Camayoc shapes require those type assertions
-explicitly, so floor selection does not depend on subclass inference. A plain
-Action needs no trajectory; a plain observation needs no token count. Validate
-existing records before activating these constraints. Other compatibility
-targets retain their current behavior.
+## The stack
 
-`shapes/` holds SHACL shapes over the catalog's terms. The first set,
-`work-item.shapes.ttl`, covers tracker-agnostic work: a `WorkItem`, the scope
-it grants, the `Blocker`s it waits on, and the `Observation`s a tracker
-projection records. `camayoc.shapes.ttl` covers the records a reader trusts:
-decisions, verifications, execution paths, requirements and metrics, golden
-paths and cost accounting. `ontology.shapes.ttl` covers the general graph:
-infrastructure, code and repositories, documents and media collections,
-failure knowledge, and directives with the policies that govern them. Shapes
-that depend on crew and personal terms not yet in the catalog are omitted.
-`shapes/examples/` has a conforming example for each file.
+<!-- stack-table:start -->
 
-The shapes keep their deliberate posture: strict on the `sourceKind`
-provenance tag, permissive elsewhere. Scope is optional, because unknown scope
-advises and never blocks. Shape IRIs share the namespace but are not
-vocabulary terms.
+The Quipu stack is built around a governed, bitemporal knowledge store: shared
+facts, decisions and work history your agents can query. Quipu can check writes
+against your rules, records where each fact came from, and answers what was true
+when.
 
-## Valid time
+| tool | what it gives your agents |
+|---|---|
+| [tambo](https://github.com/scbrown/tambo) | 🧰 Agent Platform Toolkit - installs and configures the quipu stack |
+| [quipu](https://github.com/scbrown/quipu) | stores shared facts with provenance and history; can check writes against your rules |
+| [camayoc](https://github.com/scbrown/camayoc) | prepares knowledge and vocabulary for Quipu, with checks before it is admitted |
+| [quechua](https://github.com/scbrown/quechua) | shared vocabulary and shapes for interoperable knowledge |
+| [chaski](https://github.com/scbrown/chaski) | reacts to graph changes and delivers governed notifications |
+| [bobbin](https://github.com/scbrown/bobbin) | searches your code and can include related knowledge from Quipu |
+| [yupana](https://github.com/scbrown/yupana) | shows code impact and can read policies from Quipu to check changes |
+| [desire-path](https://github.com/scbrown/desire-path) | turns agent mistakes into feature requests; works on its own without Quipu |
+| [seeds](https://github.com/scbrown/seeds) | a work item tracker backed by the Quipu knowledge base |
+| [shantytown](https://github.com/scbrown/shantytown) | runs crews of AI agents on work items, triggered by hand, on a schedule or by events; can share work and memory through Quipu |
+| [rikuy](https://github.com/scbrown/rikuy) | live brief: status, graphs, watches and signed decisions over Quipu |
+| [shuttle](https://github.com/scbrown/shuttle) | runs signed agent workflows and keeps their records in Quipu |
 
-[profiles/valid-time.json](profiles/valid-time.json) declares per-class source
-properties for valid-time projection. The [profile contract](profiles/README.md)
-covers tracker lifetimes, activities, calendar entries and point observations,
-with an offline reference resolver. Adoption is explicit; publishing this file
-does not change serving shapes or existing producers.
-
-## Scheduled jobs
-
-The opt-in [scheduled-job profile](profiles/scheduled-jobs/README.md) uses
-Schema.org Event, Schedule and Action for recurring operational work. Its
-validator checks an example and individual refusal cases, including unrelated
-data controls. Publishing it does not load a store policy or activate jobs.
-
-## Data catalog
-
-The [data-map profile](profiles/data-catalog/README.md) uses public DCAT3 and
-Schema.org types. General Catalog, DatasetSeries and source-code metadata remain
-permissive; strict constraints require an explicit `dct:conformsTo` shape marker.
-An offline admission reference additionally requires that marker and exact
-query/source identities, including when removing a marker avoids a SHACL target.
-Publishing this profile neither loads a store policy nor authorizes SQL or reads.
-
-## Releases and pinning
-
-The Pages copy of `ns.ttl` follows `main` and changes without notice. To pin,
-use a release: each `vX.Y.Z` tag publishes `quechua-ns-vX.Y.Z.ttl` and
-`SHA256SUMS.txt`. The file declares its own version as `owl:versionInfo` on
-`<https://scbrown.github.io/quechua/ns>`, and the release refuses a tag that
-disagrees with it. Changes are listed in [CHANGELOG.md](CHANGELOG.md). Removing
-or renaming a term is a major version.
-
-GitHub Pages serves the repository root. The namespace document is `ns.html`;
-its extensionless URL must be checked after deployment. It links to `ns.ttl`
-as its machine-readable alternative.
-
-## Validation
-
-Run `uv run --locked --script scripts/check_shapes.py --selftest` to check that
-every term a shape uses is declared in `ns.ttl`, and that the conforming examples
-validate while each invalid variant fails on the constraint it breaks.
-
-Run `uv run --locked --script scripts/check_catalog.py --selftest` to parse the
-Turtle, check declaration types and labels, and compare its terms with the HTML
-anchors. The command also verifies rejection of eleven deliberately invalid copies.
-
-Run `uv run --locked --script scripts/trim.py --selftest` to check that every
-term has exactly one decision, every replacement and alignment target is defined
-by a pinned vocabulary, and `ns.ttl`, `ns.html` and `alignments.ttl` agree with
-the tables. After editing a table, `--write` regenerates those three files.
-`scripts/pin_vocab.py --check` confirms the pinned sources are still what their
-publishers serve; `--update` re-pins them after a deliberate upgrade.
-CI runs the `Validate vocabulary` check on every pull request, without path
-filters, and on pushes to main. Dependencies are pinned in the script lockfile.
-This checks the repository artifacts; deployed HTTP responses need a separate
-hosting check.
-
-## Release delivery
-
-Release PRs update the catalog version, version file and changelog together.
-A merged release PR creates a draft and a version tag, then the same workflow
-runs the existing catalog, shapes and trim checks at that tag. Only after the
-checksum-listed assets are uploaded does the draft become public. This avoids
-depending on a second workflow from a tag created with the workflow token.
-
-The producer uses the repository workflow token and requires permission to
-create release PRs. A token or permission refusal is a failed delivery, not a
-reason to hand-tag a release. Tag-triggered publication remains a recovery
-path. Existing published releases are never overwritten by the PR path.
-
-Publishing vocabulary assets does not activate shapes or migrate instances.
+<!-- stack-table:end -->

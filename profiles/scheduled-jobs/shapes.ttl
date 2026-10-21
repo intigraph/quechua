@@ -32,9 +32,8 @@ q:ScheduledJobActionShape a sh:NodeShape ;
     sh:property [ sh:path schema:location ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
     sh:property [ sh:path schema:target ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
 
-# Initial runtime contract: positive fixed intervals, explicit timezone and
-# offset-aware activation anchor. Calendar recurrence is a separately admitted
-# reader capability; do not silently approximate months, weekdays or exceptions.
+# Positive fixed intervals or one weekly local weekday/time. Consumers validate
+# IANA zones and anchor alignment; calendar qualifiers never mean elapsed weeks.
 q:RecurringJobScheduleShape a sh:NodeShape ;
     sh:targetClass schema:Schedule ;
     sh:property [ sh:path schema:repeatFrequency ; sh:minCount 1 ; sh:maxCount 1 ;
@@ -45,12 +44,21 @@ q:RecurringJobScheduleShape a sh:NodeShape ;
         sh:datatype xsd:string ; sh:minLength 1 ] ;
     sh:property [ sh:path schema:startDate ; sh:minCount 1 ; sh:maxCount 1 ;
         sh:datatype xsd:dateTime ; sh:pattern "(Z|[+-][0-9]{2}:[0-9]{2})$" ] ;
-    sh:property [ sh:path schema:byDay ; sh:maxCount 0 ] ;
+    sh:or (
+        [ sh:property [ sh:path schema:byDay ; sh:maxCount 0 ] ;
+          sh:property [ sh:path schema:startTime ; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path schema:repeatFrequency ;
+              sh:hasValue "P7D"^^xsd:duration ] ;
+          sh:property [ sh:path schema:byDay ; sh:minCount 1 ; sh:maxCount 1 ;
+              sh:nodeKind sh:IRI ; sh:in (schema:Monday schema:Tuesday
+                  schema:Wednesday schema:Thursday schema:Friday schema:Saturday schema:Sunday) ] ;
+          sh:property [ sh:path schema:startTime ; sh:minCount 1 ; sh:maxCount 1 ;
+              sh:datatype xsd:time ; sh:pattern "^([01][0-9]|2[0-3]):[0-5][0-9]:00$" ] ]
+    ) ;
     sh:property [ sh:path schema:byMonth ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:byMonthDay ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:byMonthWeek ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:exceptDate ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:repeatCount ; sh:maxCount 0 ] ;
-    sh:property [ sh:path schema:startTime ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:endTime ; sh:maxCount 0 ] ;
     sh:property [ sh:path schema:endDate ; sh:maxCount 0 ] .

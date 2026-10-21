@@ -1,0 +1,17 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://example.org/jobs/> .
+
+ex:review-occurrences a schema:Event ;
+    schema:eventSchedule ex:review-schedule ;
+    schema:potentialAction ex:review .
+ex:review a schema:Action ;
+    schema:name "review" ; schema:identifier "manifest-revision-1" ;
+    q:sourceKind "declared" ; q:owner "operator" ; q:enabled false ;
+    schema:location ex:execution-host ; schema:target ex:approved-command-revision-1 .
+ex:review-schedule a schema:Schedule ;
+    schema:repeatFrequency "P7D"^^xsd:duration ;
+    schema:byDay schema:Monday ; schema:startTime "09:17:00"^^xsd:time ;
+    schema:scheduleTimezone "America/New_York" ;
+    schema:startDate "2026-10-26T09:17:00-04:00"^^xsd:dateTime .

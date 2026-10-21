@@ -1,0 +1,9 @@
+Script started on 2026-10-20 21:50:59-04:00 [COMMAND="stty -onlcr && uv run --offline --locked --script scripts/demo_weekly_profile.py" <not executed on terminal>]
+Installed 8 packages in 18ms
+Base 2374dd5f9c37aaeec13f85a326f7d17e39ca0bb8 : disabled weekly declaration refused
+Candidate: disabled P7D/Monday/09:17:00 declaration conforms
+Fixed interval control: conforms before and after
+Partial calendar qualifier: refused, not reinterpreted as elapsed P7D
+SOURCE VALIDATION ONLY: no profile loaded, graph minted, job enabled or runtime firing
+
+Script done on 2026-10-20 21:51:00-04:00 [COMMAND_EXIT_CODE="0"]

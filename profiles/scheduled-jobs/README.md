@@ -13,11 +13,20 @@ IRI is a reference for an independently admitted local manifest, never shell
 text to execute from the graph. Host identity must also be resolved by the
 consumer. Disabled declarations remain fully described and queryable.
 
-The first reader contract supports positive fixed day/hour/minute/second
-intervals, an explicit timezone and offset-aware activation anchor. Calendar
-qualifiers, exceptions, repeat counts and additional wall-clock bounds are
-refused until a reader explicitly supports them. They are never silently
-approximated as fixed intervals. Complex cron jobs stay in their original
+The reader contract supports positive fixed day/hour/minute/second intervals,
+or a weekly local-time form: `repeatFrequency P7D`, exactly one Schema.org
+weekday in `byDay`, and one `startTime` as `HH:MM:00` (`xsd:time`, no offset).
+Both require an IANA timezone and offset-aware activation anchor. See the
+disabled [weekly example](weekly-example.ttl). Consumers verify anchor alignment
+with its weekday and local time in that zone, then convert each occurrence to
+UTC separately. Monday 09:17 New York is 13:17 UTC on October 26, 2026, then
+14:17 UTC after the November 1 fallback. Gaps and overlaps refuse as UNKNOWN;
+consumers retain pending state instead of shifting a time or choosing a fold.
+SHACL alone cannot verify IANA rules or execution eligibility.
+
+Partial/multiple weekdays, sub-minute times, exceptions, repeat counts and other
+calendar bounds remain refused. They are never silently approximated as fixed
+intervals. Complex cron jobs stay in their original
 schedule until a compatible migration is proved. Multiple schedules per Event
 are permitted, but consumers must define overlap deduplication before admission.
 
@@ -47,3 +56,12 @@ Run `uv run --locked --script scripts/check_scheduled_jobs.py` for a valid
 example, a disabled declaration, unrelated-data controls and individual refusal
 cases. Runtime acceptance still requires natural firings, signed-result
 read-back and an observed missed-deadline drill.
+
+For a before/after source demonstration, run
+`uv run --locked --script scripts/demo_weekly_profile.py`. It checks the same
+weekly declaration against base `2374dd5` and the candidate, retains a positive
+fixed-interval control and refuses partial qualifiers. The exact candidate
+head is recorded in the PR. Download the [recording](demo.log) and
+[timing](demo.timing), then use
+`scriptreplay --log-out demo.log --log-timing demo.timing`.
+Terminal playback was checked; no inline video or installed profile is claimed.

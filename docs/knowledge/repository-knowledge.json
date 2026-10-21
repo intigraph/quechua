@@ -38,7 +38,7 @@
       "source": "scripts/build-repository-share.py",
       "subject": "http://aegis.gastown.local/ontology/code/quechua/scripts%2Fbuild-repository-share.py",
       "summary": "The repository-owned pendant builder uses the Bobbin indexer and Quipu share/import engine; publication policy stays on the trusted host.",
-      "source_sha256": "f7153d93669e0079796e53e4238bfeb18e587b8eea7510ffbfa32c45408149be",
+      "source_sha256": "d3127f508798ed6c5b9785d76deb6bbc45b02f9777a79418e41732bfe6bc367f",
       "properties": {
         "interfaceKind": "file-format",
         "publicName": "Repository pendant asset triplet"

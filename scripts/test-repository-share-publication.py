@@ -5,6 +5,7 @@
 """
 
 import importlib.util
+import hashlib
 import json
 import os
 import shutil
@@ -79,6 +80,63 @@ class Publication(unittest.TestCase):
             self.revision,
         )
 
+    def add_alignments(self):
+        carrier = ROOT.parent / "docs/knowledge/alignments.ttl"
+        data = carrier.read_bytes()
+        (self.stage / "alignments.ttl").write_bytes(data)
+        manifest = json.loads((self.stage / "manifest.json").read_text())
+        manifest.update(
+            alignments_hash="sha256:" + hashlib.sha256(data).hexdigest(),
+            files={"alignments": "alignments.ttl"},
+        )
+        (self.stage / "manifest.json").write_text(json.dumps(manifest))
+        return carrier
+
+    def test_native_alignment_transport_packages_and_reads_back(self):
+        builder = load("builder_alignment_test", ROOT / "build-repository-share.py")
+        carrier = self.add_alignments()
+        builder.verify_carried_alignments(self.stage, carrier)
+        self.prepare()
+        self.assertEqual(
+            verifier.verify(self.root, "v1.2.3", self.revision)["source_revision"],
+            self.revision,
+        )
+        import tarfile
+
+        with tarfile.open(self.archive) as archive:
+            self.assertEqual(
+                archive.extractfile("alignments.ttl").read(), carrier.read_bytes()
+            )
+
+    def test_alignment_claims_cannot_hide_missing_corrupt_or_foreign_bytes(self):
+        self.add_alignments()
+        manifest = (self.stage / "manifest.json").read_text()
+        carrier = self.stage / "alignments.ttl"
+        reviewed = carrier.read_bytes()
+        for case in ("missing", "corrupt", "unbound", "foreign", "foreign-member"):
+            with self.subTest(case=case):
+                (self.stage / "manifest.json").write_text(manifest)
+                carrier.write_bytes(reviewed)
+                if case == "missing":
+                    carrier.unlink()
+                elif case == "corrupt":
+                    carrier.write_bytes(reviewed + b"# changed\n")
+                elif case == "unbound":
+                    value = json.loads(manifest)
+                    value.pop("alignments_hash")
+                    (self.stage / "manifest.json").write_text(json.dumps(value))
+                elif case == "foreign":
+                    carrier.write_bytes(b"# foreign carrier\n")
+                    value = json.loads(manifest)
+                    value["alignments_hash"] = "sha256:" + publisher.digest(carrier)
+                    (self.stage / "manifest.json").write_text(json.dumps(value))
+                else:
+                    (self.stage / "foreign.ttl").write_bytes(reviewed)
+                with self.assertRaises(ValueError):
+                    publisher.package(self.stage, self.archive)
+                self.assertFalse(self.archive.exists())
+                (self.stage / "foreign.ttl").unlink(missing_ok=True)
+
     def test_required_members_and_recipe(self):
         (self.stage / "queries.ttl").unlink()
         with self.assertRaisesRegex(ValueError, "required nonempty"):
@@ -87,6 +145,20 @@ class Publication(unittest.TestCase):
         (self.stage / "manifest.json").write_text("{}")
         with self.assertRaisesRegex(ValueError, "provider-byte"):
             publisher.check_share(self.stage)
+
+    def test_public_readback_rejects_self_consistent_foreign_alignment(self):
+        self.add_alignments()
+        carrier = self.stage / "alignments.ttl"
+        carrier.write_bytes(b"# foreign carrier\n")
+        manifest = json.loads((self.stage / "manifest.json").read_text())
+        manifest["alignments_hash"] = "sha256:" + publisher.digest(carrier)
+        (self.stage / "manifest.json").write_text(json.dumps(manifest))
+        # Model an untrusted producer with valid archive/provenance checksums.
+        # The independent readback must still enforce the source-byte contract.
+        with patch.object(publisher, "check_share"):
+            self.prepare()
+        with self.assertRaisesRegex(ValueError, "reviewed source carrier"):
+            verifier.verify(self.root, "v1.2.3", self.revision)
 
     def test_text_line_span_and_private_members_refuse(self):
         for predicate in ("content", "startLine", "endLine"):
@@ -205,10 +277,55 @@ class Publication(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "bounded"):
             verifier.wait(
-                "v1.2.3", self.revision, attempts=2, pause=pauses.append, run=run
+                "v1.2.3", self.revision, attempts=2, pause=pauses.append, run=run,
+                admitted=True,
             )
         self.assertEqual(len(calls), 2)
         self.assertEqual(pauses, [30])
+
+    def test_publisher_admission_gates_reads_without_masking_admitted_failures(self):
+        calls = []
+
+        def download(args, **kwargs):
+            calls.append(args)
+            folder = Path(args[args.index("--dir") + 1])
+            for source in self.root.iterdir():
+                if source.is_file():
+                    shutil.copyfile(source, folder / source.name)
+            return subprocess.CompletedProcess(args, 0)
+
+        for value in (None, "", "false"):
+            self.assertFalse(verifier.publisher_admitted(value))
+        for value in ("TRUE", "unknown", "false ", True):
+            with self.assertRaises(ValueError):
+                verifier.publisher_admitted(value)
+        unadmitted = verifier.wait("v1.2.3", self.revision, run=download)
+        self.assertEqual(unadmitted["status"], "NOT_ADMITTED")
+        self.assertEqual(calls, [])
+        self.prepare()
+        admitted = verifier.wait(
+            "v1.2.3", self.revision, run=download,
+            admitted=verifier.publisher_admitted("true"),
+        )
+        self.assertEqual(admitted["status"], "VERIFIED")
+        self.assertEqual(len(calls), 1)
+        # The separate admitted-missing control must still exhaust and refuse.
+        self.test_wait_is_bounded()
+
+    def test_workflow_admission_output_is_explicit_and_never_waits(self):
+        output = self.root / "github-output"
+        for value, status, line in (
+            ("", "NOT_ADMITTED", "admitted=false\n"),
+            ("false", "NOT_ADMITTED", "admitted=false\n"),
+            ("true", "ADMITTED", "admitted=true\n"),
+        ):
+            output.unlink(missing_ok=True)
+            with patch.dict(os.environ, {
+                "TRUSTED_REPOSITORY_SHARE_ENABLED": value,
+                "GITHUB_OUTPUT": str(output),
+            }), patch.object(verifier, "wait", side_effect=AssertionError("unexpected readback")):
+                self.assertEqual(verifier.main(["--admission"])["status"], status)
+            self.assertEqual(output.read_text(), line)
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ MEMBERS = {
     "manifest.ttl",
     "shapes.ttl",
     "queries.ttl",
+    "alignments.ttl",
 }
 
 
@@ -40,6 +41,30 @@ def digest(path):
     return result.hexdigest()
 
 
+def check_alignments(stage, manifest):
+    """An optional native carrier must bind the exact reviewed source bytes."""
+    files = manifest.get("files", {})
+    if not isinstance(files, dict):
+        raise ValueError("invalid share file manifest")
+    path = stage / "alignments.ttl"
+    declared = files.get("alignments")
+    claim = manifest.get("alignments_hash")
+    if not path.exists() and not path.is_symlink() and declared is None and claim is None:
+        return
+    if (
+        declared != "alignments.ttl"
+        or not isinstance(claim, str)
+        or not re.fullmatch(r"sha256:[0-9a-f]{64}", claim)
+        or not path.is_file()
+        or path.is_symlink()
+        or claim != "sha256:" + digest(path)
+    ):
+        raise ValueError("missing, corrupt or unbound alignments carrier")
+    reviewed = Path(__file__).resolve().parents[1] / "docs/knowledge/alignments.ttl"
+    if path.read_bytes() != reviewed.read_bytes():
+        raise ValueError("alignments differ from the reviewed source carrier")
+
+
 def check_share(stage):
     files = list(stage.iterdir())
     if any(not p.is_file() or p.is_symlink() or p.name not in MEMBERS for p in files):
@@ -53,7 +78,10 @@ def check_share(stage):
     ):
         if not (stage / name).is_file() or not (stage / name).stat().st_size:
             raise ValueError("required nonempty share member missing: " + name)
-    recipe = json.loads((stage / "manifest.json").read_text()).get("embedding")
+    manifest = json.loads((stage / "manifest.json").read_text())
+    if not isinstance(manifest, dict):
+        raise ValueError("share manifest must be an object")
+    recipe = manifest.get("embedding")
     if (
         not isinstance(recipe, dict)
         or not isinstance(recipe.get("model"), str)
@@ -67,6 +95,7 @@ def check_share(stage):
         )
     ):
         raise ValueError("share omitted a provider-byte embedding recipe")
+    check_alignments(stage, manifest)
     # This repository pack is pointer-only. Curated idea summaries use
     # rdfs:comment; source bodies and line spans are never release predicates.
     export = (stage / "export.nt").read_text()

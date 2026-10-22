@@ -21,13 +21,24 @@ record may produce derived identity through the engine's existing apply path.
 The current source profile deliberately does not import arbitrary nonempty
 mapping data until an actual curated artifact and its transport are reviewed.
 
-The copied release workflow verifies the three public assets only after the
-ordinary release finishes. The managed trusted host runs this repository's own
+The copied release workflow records `NOT_ADMITTED` without asset lookups when
+`TRUSTED_REPOSITORY_SHARE_ENABLED` is absent or `false`. Set that repository
+variable to `true` only after the existing trusted producer has actually admitted
+this repository; the flag does not configure or start a producer. Other values
+refuse. An admitted release verifies all three assets after the ordinary release
+finishes; missing or invalid assets still fail the bounded readback.
+The managed trusted host runs this repository's own
 publisher, keeps its publication policy private, pins both native engine
 executables and the indexer, and refuses retained uncertain upload outcomes.
 Default configuration still publishes only the existing Quipu corpus. Enabling
 another repository requires its actual trusted host configuration and a clean
 release containing this job; committing this source does not publish an asset.
+
+An engine advertising native alignment transport may include `alignments.ttl`.
+Packaging and public readback require its manifest path and SHA-256 to match the
+exact reviewed repository carrier. An absent optional member remains valid for
+older engines; a declared-but-missing, corrupt, unbound or foreign carrier
+refuses. Transporting the empty carrier does not apply or approve a mapping.
 
 The publisher requires the engine's model/digest/dimension manifest recipe.
 Loading and vector rebuilding belong to the native engine. No hosted job gets

@@ -53,7 +53,7 @@ def check():
             Literal("2026-01-01T00:00:00", datatype=XSD.dateTime))
     variant("occurrence bounds cannot override schedule", EX['review-occurrences'], S.startDate,
             Literal("2026-01-02T00:00:00Z", datatype=XSD.dateTime), add=True)
-    for predicate, value in ((S.byDay, S.Monday), (S.byMonth, Literal(1)),
+    for predicate, value in ((S.byMonth, Literal(1)),
                              (S.exceptDate, Literal("2026-01-01", datatype=XSD.date))):
         variant("unsupported calendar qualifier " + str(predicate), EX['review-schedule'],
                 predicate, value, add=True)
@@ -64,6 +64,35 @@ def check():
     unrelated.add((EX.other, RDF.type, S.Action))
     unrelated.add((EX.other_event, RDF.type, S.Event))
     cases.append(("unrelated action/event not targeted as jobs", unrelated, True, None))
+    weekly = Graph().parse(ROOT / 'profiles/scheduled-jobs/weekly-example.ttl')
+    cases.append(('weekly local-time declaration', weekly, True, None))
+    partial = Graph()
+    for triple in base:
+        partial.add(triple)
+    partial.add((EX['review-schedule'], S.byDay, S.Monday))
+    cases.append(('calendar qualifier cannot be silently ignored', partial, False, None))
+    for name, predicate, value in (
+        ('missing weekday', S.byDay, None),
+        ('missing local time', S.startTime, None),
+        ('literal weekday', S.byDay, Literal('Monday')),
+        ('unknown weekday', S.byDay, EX.Funday),
+        ('nonweekly cadence', S.repeatFrequency, Literal('P1D', datatype=XSD.duration)),
+        ('time with seconds', S.startTime, Literal('09:17:01', datatype=XSD.time)),
+        ('zoned local time', S.startTime, Literal('09:17:00Z', datatype=XSD.time)),
+        ('string local time', S.startTime, Literal('09:17:00')),
+    ):
+        graph = Graph()
+        for triple in weekly:
+            graph.add(triple)
+        graph.remove((EX['review-schedule'], predicate, None))
+        if value is not None:
+            graph.add((EX['review-schedule'], predicate, value))
+        cases.append((name, graph, False, None))
+    multiple = Graph()
+    for triple in weekly:
+        multiple.add(triple)
+    multiple.add((EX['review-schedule'], S.byDay, S.Tuesday))
+    cases.append(('multiple weekdays require another supported contract', multiple, False, None))
     for name, graph, expected, path in cases:
         conforms, report, _ = validate(graph, shacl_graph=Graph().parse(PROFILE))
         assert bool(conforms) == expected, name

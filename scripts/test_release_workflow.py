@@ -15,6 +15,22 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ReleaseWorkflowTests(unittest.TestCase):
+    def test_pendant_verification_requires_explicit_publisher_admission(self):
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/release.yml").read_text(), Loader=yaml.BaseLoader
+        )
+        job = workflow["jobs"]["repository-pendant"]
+        self.assertEqual(job["needs"], "release")
+        self.assertEqual(job["permissions"], {"contents": "read"})
+        self.assertEqual(
+            job["env"]["TRUSTED_REPOSITORY_SHARE_ENABLED"],
+            "${{ vars.TRUSTED_REPOSITORY_SHARE_ENABLED }}",
+        )
+        admission = next(step for step in job["steps"] if step.get("id") == "publisher")
+        self.assertEqual(admission["run"], "python3 scripts/verify-repository-share.py --admission")
+        verify = next(step for step in job["steps"] if step.get("name") == "Verify the bounded public pointer corpus")
+        self.assertEqual(verify["if"], "steps.publisher.outputs.admitted == 'true'")
+
     def test_release_pr_calls_publisher_only_after_tag_creation(self):
         producer = yaml.load(
             (ROOT / ".github/workflows/release-pr.yml").read_text(),

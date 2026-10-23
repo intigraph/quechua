@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.10.0](https://github.com/scbrown/quechua/compare/v0.9.0...v0.10.0) (2026-10-23)
+
+
+### Features
+
+* ship repository-owned pointer pendants ([#20](https://github.com/scbrown/quechua/issues/20)) ([3ffd2b8](https://github.com/scbrown/quechua/commit/3ffd2b82d4feed39e3800447d401054073524d34))
+
 ## [0.9.0](https://github.com/scbrown/quechua/compare/v0.8.0...v0.9.0) (2026-10-21)
 
 

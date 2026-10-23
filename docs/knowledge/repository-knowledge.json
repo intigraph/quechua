@@ -8,7 +8,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#a-thin-profile-over-public-vocabularies",
       "summary": "Quechua keeps governance and trust concepts not already covered by public vocabularies; other concepts remain public terms with explicit pointers.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "type": "Concept"
     },
     {
@@ -16,7 +16,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#shapes",
       "summary": "The repository ships opt-in SHACL profiles for Actions, Observations, work items and trusted knowledge records. Publishing shapes does not activate them.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "properties": {
         "interfaceKind": "file-format",
         "publicName": "Quechua SHACL profiles"
@@ -27,7 +27,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#releases-and-pinning",
       "summary": "Immutable versioned Turtle assets and SHA256SUMS bind a release to its catalog version; the Pages copy follows main and is not a pin.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "properties": {
         "interfaceKind": "file-format",
         "publicName": "Versioned Turtle vocabulary assets"
@@ -52,11 +52,11 @@
       "kind": "decision",
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#candidate-stable-namespace",
-      "summary": "The installation reference records a candidate namespace with redirect registration pending; it explicitly preserves existing identifiers and does not install aliases or migrate data. This source proposal makes no resolver decision.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "summary": "The installation reference records the registered Intigraph namespace and additive catalogs while preserving existing identifiers. Publication does not install aliases or migrate data; consumers must prove query and validation compatibility separately.",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "type": "DecisionRecord",
       "properties": {
-        "status": "proposed",
+        "status": "accepted",
         "supersessionStatus": "not-recorded-in-source"
       },
       "see_also": [
@@ -79,7 +79,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#validation",
       "summary": "Use the pinned catalog, shape, trim and profile checks before changing vocabulary assets.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "properties": {
         "startHereOrder": 2
       }
@@ -89,7 +89,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#releases-and-pinning",
       "summary": "Use immutable checksum-listed release artifacts for pinned consumers; publication does not activate policy.",
-      "source_sha256": "e83576338394c484d14d8b27aac1f02e3b42de9f329a9db7acfe2f41cb50652d",
+      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
       "properties": {
         "startHereOrder": 3
       }

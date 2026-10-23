@@ -7,21 +7,31 @@ A shared vocabulary for knowledge, governance, and code intelligence.
 - [Human-readable catalog](https://scbrown.github.io/quechua/ns)
 - [Turtle vocabulary](https://scbrown.github.io/quechua/ns.ttl)
 
-### Candidate stable namespace
+<a id="candidate-stable-namespace"></a>
 
-The proposed permanent namespace is `https://w3id.org/tallygraph/quechua/ns#`.
-Redirect registration is pending; these identifiers are not yet advertised as
-resolvable. The additive [candidate Turtle catalog](https://github.com/scbrown/quechua/blob/main/ns-stable.ttl) and
-[HTML catalog](https://github.com/scbrown/quechua/blob/main/ns-stable.html) preserve every declaration and annotation,
-with explicit one-to-one `owl:sameAs` links from the existing identifiers.
+### Stable namespace
+
+The permanent namespace is `https://w3id.org/intigraph/quechua/ns#`.
+Its [registered redirect](https://w3id.org/intigraph/quechua/ns) serves Turtle
+for `Accept: text/turtle`, JSON-LD for `Accept: application/ld+json`, and HTML
+otherwise. The additive [Turtle catalog](https://github.com/intigraph/quechua/blob/main/ns-stable.ttl)
+and [HTML catalog](https://github.com/intigraph/quechua/blob/main/ns-stable.html)
+preserve every declaration and annotation, with explicit one-to-one
+`owl:sameAs` links from the existing identifiers. The earlier `tallygraph`
+namespace was a candidate; it is not the registered namespace.
+
 The existing catalog documents and consumers' stored identifiers are unchanged.
-This publication does not install aliases into a consumer or migrate its data.
+Publishing these files does not install aliases into a consumer or migrate its
+data. A consumer must prove its query and validation behavior before changing
+namespaces. In particular, property aliases need a supported property-equivalence
+mechanism; identity links alone do not guarantee predicate rewriting.
 
-Regenerate and verify the candidate representations after a catalog change:
+Regenerate and verify the additive representations after a catalog change:
 
 ```sh
 uv run --locked --script scripts/publish_stable_namespace.py --write --selftest
 ```
+
 - [Work-item SHACL shapes](https://scbrown.github.io/quechua/shapes/work-item.shapes.ttl)
 - [Action governance SHACL shapes](https://scbrown.github.io/quechua/shapes/action-governance.shapes.ttl)
 - [Observation governance SHACL shapes](https://scbrown.github.io/quechua/shapes/observation-governance.shapes.ttl)

@@ -10,11 +10,19 @@ curl -fsSL https://raw.githubusercontent.com/scbrown/quechua/main/install.sh | s
 ```
 
 Python 3.9+, curl, and a Linux or macOS shell. Downloads and verifies the latest vocabulary and shapes into
-`~/.local/share/quechua/TAG`. This is a data package, not an executable.
+`~/.local/share/quechua/TAG`. Releases that include the read-only orientation CLI also install `quechua prime`
+under `~/.local/bin`. Older pinned releases remain data-only.
 
 Set `STACK_INSTALL_ROOT` on the receiving shell for another prefix.
 Pinned releases, alternatives, configuration and removal are in the
 [installation and usage reference](docs/installation-reference.md).
+
+## Agent orientation
+
+Run `quechua prime` (`--brief`, `--json`, or `--static`) to find terms and inspect
+the vocabulary release version. It does not load or modify a graph. See the
+[primer](docs/prime.md) and [skill](skills/quechua/SKILL.md). From a source checkout,
+use `python3 scripts/prime.py prime`.
 
 ## Try it
 

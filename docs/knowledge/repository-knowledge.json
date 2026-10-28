@@ -8,7 +8,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#a-thin-profile-over-public-vocabularies",
       "summary": "Quechua keeps governance and trust concepts not already covered by public vocabularies; other concepts remain public terms with explicit pointers.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "type": "Concept"
     },
     {
@@ -16,7 +16,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#shapes",
       "summary": "The repository ships opt-in SHACL profiles for Actions, Observations, work items and trusted knowledge records. Publishing shapes does not activate them.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "properties": {
         "interfaceKind": "file-format",
         "publicName": "Quechua SHACL profiles"
@@ -27,7 +27,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#releases-and-pinning",
       "summary": "Immutable versioned Turtle assets and SHA256SUMS bind a release to its catalog version; the Pages copy follows main and is not a pin.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "properties": {
         "interfaceKind": "file-format",
         "publicName": "Versioned Turtle vocabulary assets"
@@ -53,7 +53,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#candidate-stable-namespace",
       "summary": "The installation reference records the registered Intigraph namespace and additive catalogs while preserving existing identifiers. Publication does not install aliases or migrate data; consumers must prove query and validation compatibility separately.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "type": "DecisionRecord",
       "properties": {
         "status": "accepted",
@@ -68,7 +68,7 @@
       "source": "README.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md",
       "summary": "Start with the repository README and current namespace links; distinguish published declarations from explicit consumer adoption.",
-      "source_sha256": "1813785c0a301427d8c1fcacbc7d32d9772a749a85d9675310acef077e6d3470",
+      "source_sha256": "47844e23f68a8dce421982d5b8ae20abb754e1592c5f3b1f1098f116bbb2143f",
       "properties": {
         "startHereOrder": 1,
         "glossaryTerm": "https://scbrown.github.io/quechua/ns#Concept"
@@ -79,7 +79,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#validation",
       "summary": "Use the pinned catalog, shape, trim and profile checks before changing vocabulary assets.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "properties": {
         "startHereOrder": 2
       }
@@ -89,7 +89,7 @@
       "source": "docs/installation-reference.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#releases-and-pinning",
       "summary": "Use immutable checksum-listed release artifacts for pinned consumers; publication does not activate policy.",
-      "source_sha256": "8c84418a451a0642e4234d5b90b87b9b3bea37002282e9f3da42e4662ba254e8",
+      "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "properties": {
         "startHereOrder": 3
       }

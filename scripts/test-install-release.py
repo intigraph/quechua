@@ -105,7 +105,7 @@ class PackageInstall(unittest.TestCase):
         self.assertEqual(result[0], 0, result)
         entry = self.prefix / 'bin/quechua'
         self.assertTrue(entry.is_symlink())
-        self.assertEqual(entry.resolve(), self.prefix / 'share/quechua' / TAG / name)
+        self.assertEqual(entry.resolve(), (self.prefix / 'share/quechua' / TAG / name).resolve())
         destination = entry.resolve().parent
         before = {p.name: (p.read_bytes(), p.stat().st_mtime_ns) for p in destination.iterdir()}
         result = subprocess.run([str(entry), 'prime', '--json'], capture_output=True, text=True, env=self.env, timeout=2)

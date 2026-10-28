@@ -180,3 +180,19 @@ path. Existing published releases are never overwritten by the PR path.
 Publishing vocabulary assets does not activate shapes or migrate instances.
 
 ## The stack
+
+## Agent orientation
+
+See the [agent primer](prime.md) for term lookup and `quechua prime`. The verified
+installer publishes a `bin/quechua` entry point only when the selected release
+contains a digest-listed CLI asset and its static smoke confirms the selected
+vocabulary version. Older releases without that asset remain data-only and preserve an existing CLI
+entry point from a newer install. With
+`STACK_INSTALL_ROOT`, the entry point is `PREFIX/bin/quechua`. It requires Python
+3.9 or newer. To remove orientation, remove that entry point; retained vocabulary
+release directories can be removed separately. Prime never installs anything.
+
+Maintainers edit `docs/agent-primer.md`, then run
+`python3 scripts/build-prime.py --sync`. The existing unittest CI job rejects stale
+book/skill copies. Release packaging embeds that primer and `version.txt` in the
+CLI asset, then lists its digest beside the unchanged vocabulary assets.

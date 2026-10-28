@@ -71,6 +71,32 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("x-release-please-version", target)
         self.assertIn(version, target)
 
+    def test_prime_asset_is_generated_digest_listed_and_uploaded(self):
+        import hashlib
+        import os
+        import shutil
+        workflow = yaml.load((ROOT / '.github/workflows/release.yml').read_text(), Loader=yaml.BaseLoader)
+        steps = workflow['jobs']['release']['steps']
+        assets = next(step['run'] for step in steps if step.get('name') == 'Assets and checksums')
+        publish = next(step['run'] for step in steps if step.get('name') == 'Publish the release')
+        self.assertEqual(publish.count('"dist/quechua-cli-$RELEASE_TAG.py"'), 2)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for folder in ('scripts', 'docs', 'shapes'):
+                shutil.copytree(ROOT / folder, root / folder)
+            for name in ('version.txt', 'ns.ttl', 'alignments.ttl'):
+                shutil.copyfile(ROOT / name, root / name)
+            tag = 'v' + (root / 'version.txt').read_text().strip()
+            env = dict(os.environ, HOME=str(root / 'home'), RELEASE_TAG=tag, PYTHONDONTWRITEBYTECODE='1')
+            subprocess.run(['bash', '-euo', 'pipefail', '-c', assets], cwd=root, env=env, check=True, capture_output=True, text=True, timeout=10)
+            manifest = dict(line.split()[::-1] for line in (root / 'dist/SHA256SUMS.txt').read_text().splitlines())
+            cli = 'quechua-cli-' + tag + '.py'
+            self.assertIn(cli, manifest)
+            for name, digest in manifest.items():
+                self.assertEqual(hashlib.sha256((root / 'dist' / name).read_bytes()).hexdigest(), digest)
+            result = subprocess.run(['python3', str(root / 'dist' / cli), 'prime', '--static', '--json'], env=env, capture_output=True, text=True, check=True, timeout=2)
+            self.assertEqual(json.loads(result.stdout)['version'], tag[1:])
+
     def test_draft_publication_and_failures(self):
         workflow = yaml.load(
             (ROOT / ".github/workflows/release.yml").read_text(),

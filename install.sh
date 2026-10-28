@@ -112,6 +112,11 @@ def install():
         manifest = work / 'checksums'
         fetch(base + '/' + CONFIG['checksum'], manifest)
         names = [name.format(tag=tag, version=version) for name in CONFIG['assets']]
+        cli_name = 'quechua-cli-' + tag + '.py'
+        cli_rows = [line.split() for line in manifest.read_text().splitlines()
+                    if len(line.split()) == 2 and line.split()[1].lstrip('*') == cli_name]
+        if cli_rows:
+            names.append(cli_name)
         digests = {}
         for name in names:
             matches = [fields[0].lower() for line in manifest.read_text().splitlines()
@@ -183,6 +188,27 @@ def install():
                             raise ValueError('empty vocabulary asset')
                         shutil.copyfile(work / name, destination / name)
                 (destination / '.release.json').write_text(json.dumps(identity, sort_keys=True) + '\n')
+            if cli_name in names:
+                cli = destination / cli_name
+                cli.chmod(0o755)
+                probe = json.loads(subprocess.check_output(
+                    [sys.executable, str(cli), 'prime', '--static', '--json'], text=True, timeout=5))
+                if not isinstance(probe, dict) or probe.get('schema') != 'stack-prime/1' or probe.get('tool') != 'quechua' or probe.get('version') != version or not isinstance(probe.get('live'), dict) or probe['live'].get('status') != 'skipped':
+                    raise ValueError('CLI version or static smoke mismatch')
+                binaries = prefix / 'bin'
+                binaries.mkdir(parents=True, exist_ok=True)
+                command = binaries / 'quechua'
+                if command.is_dir():
+                    raise ValueError('command destination is a directory')
+                fd, staged = tempfile.mkstemp(prefix='.quechua-', dir=binaries)
+                os.close(fd)
+                os.unlink(staged)
+                try:
+                    os.symlink(cli, staged)
+                    os.replace(staged, command)
+                finally:
+                    if os.path.lexists(staged):
+                        os.unlink(staged)
             if CONFIG['kind'] == 'wheel':
                 # Pip's RECORD binds installed package/entrypoint bytes. Validate
                 # it on both first install and reuse; a stale marker is not proof.
@@ -223,7 +249,11 @@ for entry in dist.files or []:
             if CONFIG['kind'] == 'source':
                 print('Source package only. Bootstrap and agent enrollment are separate explicit actions.')
             elif CONFIG['kind'] == 'data':
-                print('Vocabulary and shapes only. Nothing was loaded into a running graph.')
+                print('Nothing was loaded into a running graph.')
+                if cli_name in names:
+                    print('Read-only orientation: ' + str(prefix / 'bin/quechua') + ' prime')
+                else:
+                    print('This older release is vocabulary and shapes only; it has no prime CLI.')
             else:
                 print('Add ' + str(prefix / 'bin') + ' to PATH. Previous release directories are retained.')
         except BaseException:

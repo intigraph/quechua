@@ -83,6 +83,64 @@ class PackageInstall(unittest.TestCase):
         self.assertFalse(self.previous.is_symlink())
         self.assertNotIn('Installed verified', result[1])
 
+    def add_prime_asset(self, version=VERSION):
+        import runpy
+        builder = runpy.run_path(str(ROOT / 'scripts/build-prime.py'))
+        source = self.root / 'cli-source'
+        (source / 'scripts').mkdir(parents=True)
+        (source / 'docs').mkdir()
+        (source / 'version.txt').write_text(version)
+        (source / 'docs/agent-primer.md').write_text((ROOT / 'docs/agent-primer.md').read_text())
+        (source / 'scripts/prime.py').write_text((ROOT / 'scripts/prime.py').read_text())
+        name = 'quechua-cli-' + TAG + '.py'
+        (self.release / name).write_text(builder['render_cli'](source))
+        self.names.append(name)
+        (self.release / CONFIG['checksum']).write_text(''.join(
+            hashlib.sha256((self.release / n).read_bytes()).hexdigest() + '  ' + n + '\n' for n in self.names))
+        return name
+
+    def test_prime_asset_installs_and_runs_without_package_writes(self):
+        name = self.add_prime_asset()
+        result = self.run_installer()
+        self.assertEqual(result[0], 0, result)
+        entry = self.prefix / 'bin/quechua'
+        self.assertTrue(entry.is_symlink())
+        self.assertEqual(entry.resolve(), self.prefix / 'share/quechua' / TAG / name)
+        destination = entry.resolve().parent
+        before = {p.name: (p.read_bytes(), p.stat().st_mtime_ns) for p in destination.iterdir()}
+        result = subprocess.run([str(entry), 'prime', '--json'], capture_output=True, text=True, env=self.env, timeout=2)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        obj = json.loads(result.stdout)
+        self.assertEqual(obj['version'], VERSION)
+        self.assertEqual(obj['live']['status'], 'ok')
+        self.assertEqual(before, {p.name: (p.read_bytes(), p.stat().st_mtime_ns) for p in destination.iterdir()})
+        self.assertEqual(self.run_installer()[0], 0)
+
+    def test_bad_cli_digest_preserves_existing_entry(self):
+        name = self.add_prime_asset()
+        old = self.prefix / 'bin/quechua'
+        old.write_text('prior CLI')
+        (self.release / name).write_text('corrupted')
+        self.assertNotEqual(self.run_installer()[0], 0)
+        self.assertEqual(old.read_text(), 'prior CLI')
+        self.assertFalse(old.is_symlink())
+
+    def test_cli_smoke_version_refusal_preserves_existing_entry(self):
+        self.add_prime_asset(version='9.9.9')
+        old = self.prefix / 'bin/quechua'
+        old.write_text('prior CLI')
+        self.assertNotEqual(self.run_installer()[0], 0)
+        self.assertEqual(old.read_text(), 'prior CLI')
+        self.assertFalse((self.prefix / 'share/quechua' / TAG).exists())
+
+    def test_legacy_data_only_release_keeps_prior_cli(self):
+        old = self.prefix / 'bin/quechua'
+        old.write_text('prior CLI')
+        result = self.run_installer()
+        self.assertEqual(result[0], 0, result)
+        self.assertIn('has no prime CLI', result[1])
+        self.assertEqual(old.read_text(), 'prior CLI')
+
     def test_actual_installer_installs_verified_package(self):
         result = self.run_installer()
         self.assertEqual(result[0], 0, result)

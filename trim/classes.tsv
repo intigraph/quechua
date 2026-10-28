@@ -139,3 +139,4 @@ Feature	INFRA			no clean public class
 Component	INFRA			no clean public class
 DesignPrinciple	INFRA			
 AdmissionPolicy	KEEP	subClassOf	odrl:Policy	proposed import-admission policy with permission/prohibition/obligation rules and trust/evidence constraints; no activation or ODRL-conformance claim from class mapping
+ScheduledJob	KEEP	subClassOf	schema:Action	explicit scheduled-job profile discriminator; distinct admission from tracker Actions

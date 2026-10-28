@@ -2,10 +2,16 @@
 
 This explicit operational profile represents a recurring occurrence as a
 Schema.org Event with `eventSchedule` pointing to a Schedule and
-`potentialAction` pointing to the declared job Action. It adds no bespoke class
-or public-vocabulary property. All public terms are checked against the pinned
-Schema.org term list. See [Schedule](https://schema.org/Schedule) and
+`potentialAction` pointing to the declared job Action. An explicit `q:ScheduledJob`
+marker distinguishes these Actions from other applications using the same public
+class; it adds no executable command property. All public terms are checked
+against the pinned Schema.org term list. See [Schedule](https://schema.org/Schedule) and
 [eventSchedule](https://schema.org/eventSchedule).
+
+The optional marker must accompany `schema:Action`; marked subjects receive the
+full Action constraints even without an Event link. It grants no execution
+authority. Other profiles may exempt exactly this marker from tracker-only
+constraints while retaining their targets and malformed-item controls.
 
 The Action carries a name, immutable manifest revision, declared provenance,
 owner, explicit enablement, host IRI and command-manifest target IRI. A target

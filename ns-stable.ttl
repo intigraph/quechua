@@ -101,6 +101,7 @@
 <https://scbrown.github.io/quechua/ns#ReverseProxyRoute> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#ReverseProxyRoute> .
 <https://scbrown.github.io/quechua/ns#Rig> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#Rig> .
 <https://scbrown.github.io/quechua/ns#SSHKey> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#SSHKey> .
+<https://scbrown.github.io/quechua/ns#ScheduledJob> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#ScheduledJob> .
 <https://scbrown.github.io/quechua/ns#Script> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#Script> .
 <https://scbrown.github.io/quechua/ns#SearchService> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#SearchService> .
 <https://scbrown.github.io/quechua/ns#Section> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#Section> .
@@ -792,6 +793,8 @@
 <https://w3id.org/intigraph/quechua/ns#SSHKey> <http://www.w3.org/2000/01/rdf-schema#comment> "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://w3id.org/intigraph/quechua/ns#SSHKey> <http://www.w3.org/2000/01/rdf-schema#label> "SSHKey" .
 <https://w3id.org/intigraph/quechua/ns#SSHKey> <http://www.w3.org/2002/07/owl#deprecated> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://w3id.org/intigraph/quechua/ns#ScheduledJob> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://w3id.org/intigraph/quechua/ns#ScheduledJob> <http://www.w3.org/2000/01/rdf-schema#label> "ScheduledJob" .
 <https://w3id.org/intigraph/quechua/ns#Script> <http://purl.org/dc/terms/isReplacedBy> <https://schema.org/SoftwareSourceCode> .
 <https://w3id.org/intigraph/quechua/ns#Script> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
 <https://w3id.org/intigraph/quechua/ns#Script> <http://www.w3.org/2000/01/rdf-schema#label> "Script" .

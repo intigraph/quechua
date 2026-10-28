@@ -57,6 +57,18 @@ def check():
                              (S.exceptDate, Literal("2026-01-01", datatype=XSD.date))):
         variant("unsupported calendar qualifier " + str(predicate), EX['review-schedule'],
                 predicate, value, add=True)
+    # The marker is explicit and carries constraints outside Event traversal.
+    unmarked = Graph().parse(EXAMPLE)
+    unmarked.remove((EX.review, RDF.type, Q.ScheduledJob))
+    cases.append(("legacy unmarked declaration remains compatible", unmarked, True, None))
+    marked_only = Graph()
+    marked_only.add((EX.job, RDF.type, Q.ScheduledJob))
+    marked_only.add((EX.job, RDF.type, S.Action))
+    cases.append(("bare job marker cannot bypass required fields", marked_only, False, None))
+    unlinked = Graph().parse(EXAMPLE)
+    unlinked.remove((EX['review-occurrences'], S.potentialAction, None))
+    unlinked.remove((EX.review, S.name, None))
+    cases.append(("marked unlinked job still requires fields", unlinked, False, S.name))
     disabled = Graph().parse(EXAMPLE)
     disabled.set((EX.review, Q.enabled, Literal(False)))
     cases.append(("disabled remains a queryable declaration", disabled, True, None))

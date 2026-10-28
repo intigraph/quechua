@@ -63,6 +63,8 @@ quechua:Reaction rdfs:subClassOf prov:Plan .
 
 quechua:ReactionFiring rdfs:subClassOf prov:Activity .
 
+quechua:ScheduledJob rdfs:subClassOf schema:Action .
+
 quechua:Selector rdfs:subClassOf prov:Entity .
 
 quechua:Step rdfs:subClassOf schema:Action .

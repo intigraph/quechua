@@ -109,6 +109,7 @@
 <https://scbrown.github.io/quechua/ns#Rig> a rdfs:Class ; rdfs:label "Rig" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#SSHKey> a rdfs:Class ; rdfs:label "SSHKey" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Script> a rdfs:Class ; rdfs:label "Script" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/SoftwareSourceCode> .
+<https://scbrown.github.io/quechua/ns#ScheduledJob> a rdfs:Class ; rdfs:label "ScheduledJob" .
 <https://scbrown.github.io/quechua/ns#SearchService> a rdfs:Class ; rdfs:label "SearchService" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Section> a rdfs:Class ; rdfs:label "Section" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/CreativeWork> .
 <https://scbrown.github.io/quechua/ns#SecurityFinding> a rdfs:Class ; rdfs:label "SecurityFinding" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .

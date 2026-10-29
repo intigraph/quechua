@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/thread-workshop/quechua.png" width="704" alt="quechua: An open vocabulary book shares matching marks. Original pixel art in the Thread Workshop style."/></p>
+
 # Quechua
 
 Shared vocabulary and SHACL shapes for the Quipu stack. Reuse public terms,

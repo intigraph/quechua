@@ -1,0 +1,45 @@
+{
+  "title": "Quechua: shared terms, checked data",
+  "description": "Quechua public ontology shape executed by the real Quipu local SHACL validator; no graph server or data import.",
+  "width": 1000,
+  "height": 620,
+  "font_size": 24,
+  "line_height": 32,
+  "inputs": [
+    "ontology.shapes.ttl",
+    "missing-label.ttl",
+    "labelled.ttl"
+  ],
+  "steps": [
+    {
+      "tool": "quipu",
+      "args": [
+        "validate",
+        "--shapes",
+        "ontology.shapes.ttl",
+        "--data",
+        "missing-label.ttl"
+      ],
+      "exit": 1,
+      "hold": 10,
+      "requires": [
+        "invalid: 1 violation(s)",
+        "MinCount(1) not satisfied"
+      ]
+    },
+    {
+      "tool": "quipu",
+      "args": [
+        "validate",
+        "--shapes",
+        "ontology.shapes.ttl",
+        "--data",
+        "labelled.ttl"
+      ],
+      "hold": 10,
+      "requires": [
+        "valid (0 warnings)"
+      ]
+    }
+  ]
+}

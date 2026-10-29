@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
+<title id="title">Quechua: shared terms, checked data</title>
+<desc id="desc">Quechua public ontology shape executed by the real Quipu local SHACL validator; no graph server or data import. The animation repeats. The adjacent transcript provides a static alternative.</desc>
+<rect width="100%" height="100%" rx="16" fill="#101827"/>
+<path d="M0 54H1000" stroke="#334155"/>
+<circle cx="28" cy="27" r="7" fill="#fb7185"/>
+<circle cx="52" cy="27" r="7" fill="#fbbf24"/>
+<circle cx="76" cy="27" r="7" fill="#34d399"/>
+<text x="110" y="34" fill="#e2e8f0" font-family="monospace" font-size="20">Quechua: shared terms, checked data</text>
+<g id="frame0" visibility="hidden" font-family="DejaVu Sans Mono, Menlo, monospace" font-size="24">
+<animate attributeName="visibility" calcMode="discrete" values="visible;hidden;hidden" keyTimes="0.000000;0.500000;1.000000" dur="20.000s" repeatCount="indefinite"/>
+<text x="28" y="94" fill="#6ee7b7" xml:space="preserve">$ quipu validate --shapes ontology.shapes.ttl --data missing-</text>
+<text x="28" y="126" fill="#f1f5f9" xml:space="preserve">label.ttl</text>
+<text x="28" y="158" fill="#f1f5f9" xml:space="preserve">invalid: 1 violation(s), 0 warning(s)</text>
+<text x="28" y="190" fill="#f1f5f9" xml:space="preserve">  [Violation] https://example.org/demo/endpoint -- MinCount(1) </text>
+<text x="28" y="222" fill="#f1f5f9" xml:space="preserve">not satisfied (path: http://www.w3.org/2000/01/rdf-schema#label)</text>
+</g>
+<g id="frame1" visibility="visible" font-family="DejaVu Sans Mono, Menlo, monospace" font-size="24">
+<animate attributeName="visibility" calcMode="discrete" values="hidden;visible;visible" keyTimes="0.000000;0.500000;1.000000" dur="20.000s" repeatCount="indefinite"/>
+<text x="28" y="94" fill="#6ee7b7" xml:space="preserve">$ quipu validate --shapes ontology.shapes.ttl --data labelled.ttl</text>
+<text x="28" y="126" fill="#f1f5f9" xml:space="preserve">valid (0 warnings)</text>
+</g>
+</svg>

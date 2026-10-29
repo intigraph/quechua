@@ -1,0 +1,7 @@
+$ quipu validate --shapes ontology.shapes.ttl --data missing-label.ttl
+invalid: 1 violation(s), 0 warning(s)
+  [Violation] https://example.org/demo/endpoint -- MinCount(1) not satisfied (path: http://www.w3.org/2000/01/rdf-schema#label)
+[exit 1]
+$ quipu validate --shapes ontology.shapes.ttl --data labelled.ttl
+valid (0 warnings)
+[exit 0]

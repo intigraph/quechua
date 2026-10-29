@@ -5,6 +5,12 @@
 Shared vocabulary and SHACL shapes for the Quipu stack. Reuse public terms,
 validate the shape of knowledge, and preserve stable namespace identifiers.
 
+## Why you would want it
+
+- **Use shared terms:** reuse public vocabulary instead of inventing incompatible names.
+- **Validate incoming knowledge:** select SHACL shapes for your data's profile.
+- **Keep identifiers stable:** inspect alignments before changing a consumer's vocabulary.
+
 ## Install
 
 ```sh
@@ -19,14 +25,7 @@ Set `STACK_INSTALL_ROOT` on the receiving shell for another prefix.
 Pinned releases, alternatives, configuration and removal are in the
 [installation and usage reference](docs/installation-reference.md).
 
-## Agent orientation
-
-Run `quechua prime` (`--brief`, `--json`, or `--static`) to find terms and inspect
-the vocabulary release version. It does not load or modify a graph. See the
-[primer](docs/prime.md) and [skill](skills/quechua/SKILL.md). From a source checkout,
-use `python3 scripts/prime.py prime`.
-
-## Try it
+## First success in three commands
 
 ![Animated terminal: a Quechua shape rejects missing data, then accepts the labelled entity](docs/demos/terminal/demo.svg)
 
@@ -43,7 +42,37 @@ ls "$HOME/.local/share/quechua"/v*/*.ttl
 Choose the required shapes from the [vocabulary guide](docs/installation-reference.md)
 before admitting data. Installing files does not change your graph.
 
-## Next steps
+## On your own data
+
+Choose terms in the [catalog](https://intigraph.github.io/quechua/ns)
+and shapes from the [vocabulary guide](docs/installation-reference.md#shapes).
+The terminal fixture demonstrates a missing-label rejection followed by a
+conforming entity. Apply the shapes to a local copy of your own data before
+loading them into a live consumer. Installing vocabulary files does not enable
+validation or migrate identifiers.
+
+## Wire it into your agent
+
+Run `quechua prime` (`--brief`, `--json`, or `--static`) to find terms and inspect
+the vocabulary release version. It does not load or modify a graph. See the
+[primer](docs/prime.md) and [skill](skills/quechua/SKILL.md). From a source checkout,
+use `python3 scripts/prime.py prime`. Quechua supplies vocabulary and shapes;
+your graph tool owns loading and validation.
+
+## Before you start
+
+The installer needs Python 3.9+, curl and a Linux or macOS shell. A validator
+such as Quipu is needed to apply SHACL shapes. Select the profile for your
+records and check compatibility before loading alignments or changing namespaces.
+Data-only pinned releases do not include the orientation CLI.
+
+## What's next
+
+- [The Quechua book](https://intigraph.github.io/quechua/): concepts and usage.
+- [Installation reference](docs/installation-reference.md): configuration and removal.
+- [Reproduce the terminal demo](docs/demos/terminal.md): local fixture and full output.
+
+### Related tools and repository knowledge
 
 - [Tambo](https://github.com/scbrown/tambo): guided stack installation and verification.
 - [Camayoc](https://github.com/scbrown/camayoc): governed memory and vocabulary.
@@ -51,7 +80,7 @@ before admitting data. Installing files does not change your graph.
 
 **Load this repository’s graph:** public repository-pendant assets have not yet been verified. When a release supplies the archive, checksum and provenance, follow the [verified import workflow](https://scbrown.github.io/quipu/sharing/index.html): extract the share directory and use `quipu import SHARE_DIR --db repository.db`. Import stages knowledge; ROOT stays unchanged.
 
-## The stack
+## 🧺 The stack
 
 <!-- stack-table:start -->
 
@@ -76,3 +105,11 @@ when.
 | [shuttle](https://github.com/scbrown/shuttle) | runs signed agent workflows and keeps their records in Quipu |
 
 <!-- stack-table:end -->
+
+## Contributing
+
+See the repository tests and documentation checks before submitting a change.
+
+## 📜 License
+
+[License](LICENSE).

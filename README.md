@@ -28,6 +28,12 @@ use `python3 scripts/prime.py prime`.
 
 ## Try it
 
+![Animated terminal: a Quechua shape rejects missing data, then accepts the labelled entity](docs/demos/terminal/demo.svg)
+
+Quechua supplies the shape; Quipu validates the two public fixtures locally.
+No graph is loaded or changed. [Read the transcript](docs/demos/terminal/transcript.txt)
+or [reproduce the recording](docs/demos/terminal.md).
+
 Inspect the vocabulary and shape files without loading a running graph:
 
 ```sh

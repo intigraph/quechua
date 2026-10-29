@@ -68,7 +68,7 @@
       "source": "README.md",
       "subject": "http://aegis.gastown.local/ontology/doc/quechua/README.md",
       "summary": "Start with the repository README and current namespace links; distinguish published declarations from explicit consumer adoption.",
-      "source_sha256": "3cfb3df9b3d3f532bcb1cb538dc3756502e1c950d3cc972ed78b47851f2b062e",
+      "source_sha256": "ee5a12cb75a536a76f7b3fcf167f672b6ed72c281a63c44249bb5806c9b0da7d",
       "properties": {
         "startHereOrder": 1,
         "glossaryTerm": "https://scbrown.github.io/quechua/ns#Concept"

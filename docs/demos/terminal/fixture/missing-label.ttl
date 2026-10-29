@@ -1,0 +1,2 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+<https://example.org/demo/endpoint> a q:APIEndpoint .

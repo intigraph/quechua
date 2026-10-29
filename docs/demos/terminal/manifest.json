@@ -1,0 +1,59 @@
+{
+  "theme": "stack-terminal-24",
+  "versions": {
+    "quipu": "quipu 0.16.5\ngit_sha: 11764d3a54720662c4d520c87b0ba88be18688c9\ngit_dirty: false"
+  },
+  "binary_sha256": {
+    "quipu": "b46dcfabf25dcc421dafd1cc3641fbe892b27f7f64dc4c6869c7b0df1b4de5ff"
+  },
+  "version_args": {
+    "quipu": [
+      "--version"
+    ]
+  },
+  "inputs_sha256": {
+    "render.py": "bebbe000565314f18a58731f2a1a4690577db127b3673fa10a45ce74eef0f23c",
+    "tape": "500cbe236c7747d488f59d360f13e77a2aab8ed2bddcc537c8950404dacf5388",
+    "ontology.shapes.ttl": "323fb6cb2cc2ade60ebbc6081fc02e414a02cea4680e88333ee34fdbfebc85e3",
+    "missing-label.ttl": "cd6bc9567a68213284143b9546bcf0cfa0aad7d92264298a98a77d9b121cc494",
+    "labelled.ttl": "c91e4029aaee8905c7ab59d984410763b3ed5f8e24b439b95a6aaab238ad0a62"
+  },
+  "duration_seconds": 20.0,
+  "timeline": "deliberate reading holds; execution times recorded separately",
+  "frames_checked": 2,
+  "commands": [
+    {
+      "tool": "quipu",
+      "args": [
+        "validate",
+        "--shapes",
+        "ontology.shapes.ttl",
+        "--data",
+        "missing-label.ttl"
+      ],
+      "exit": 1,
+      "seconds": 0.017684,
+      "stdout": "invalid: 1 violation(s), 0 warning(s)\n  [Violation] https://example.org/demo/endpoint -- MinCount(1) not satisfied (path: http://www.w3.org/2000/01/rdf-schema#label)\n",
+      "stderr": ""
+    },
+    {
+      "tool": "quipu",
+      "args": [
+        "validate",
+        "--shapes",
+        "ontology.shapes.ttl",
+        "--data",
+        "labelled.ttl"
+      ],
+      "exit": 0,
+      "seconds": 0.016227,
+      "stdout": "valid (0 warnings)\n",
+      "stderr": ""
+    }
+  ],
+  "sha256": {
+    "demo.svg": "4b313a3c86f00a8b0a39138c3ae8b4a7363b5c50f03797959ae4249a3e6f4d10",
+    "transcript.txt": "8ae822caed6e669eafb087dd214b25dd144c6858653d8c2daded65ef931de750",
+    "demo.cast": "0714d4b7e2449748ec8675b424c212516fbf28ec0be276f398e7b4f0fbf964db"
+  }
+}

@@ -1,0 +1,3 @@
+{"version": 2, "width": 65, "height": 14, "title": "Quechua: shared terms, checked data", "env": {"TERM": "dumb"}}
+[0.0, "o", "\u001b[2J\u001b[H$ quipu validate --shapes ontology.shapes.ttl --data missing-\r\nlabel.ttl\r\ninvalid: 1 violation(s), 0 warning(s)\r\n  [Violation] https://example.org/demo/endpoint -- MinCount(1) \r\nnot satisfied (path: http://www.w3.org/2000/01/rdf-schema#label)\r\n"]
+[10.0, "o", "\u001b[2J\u001b[H$ quipu validate --shapes ontology.shapes.ttl --data labelled.ttl\r\nvalid (0 warnings)\r\n"]

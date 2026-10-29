@@ -1,0 +1,3 @@
+@prefix q: <https://scbrown.github.io/quechua/ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+<https://example.org/demo/endpoint> a q:APIEndpoint ; rdfs:label "Public demo API" .

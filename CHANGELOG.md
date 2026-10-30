@@ -10,6 +10,14 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.11.0](https://github.com/intigraph/quechua/compare/v0.10.1...v0.11.0) (2026-10-29)
+
+
+### Features
+
+* **profiles:** explicit quechua:ScheduledJob marker for scheduled-job declarations (aegis-6vf.2) ([#33](https://github.com/intigraph/quechua/issues/33)) ([5f562b9](https://github.com/intigraph/quechua/commit/5f562b93c475a8fe035daeba456f7de4dbef7a06))
+* quechua prime per the stack prime contract (aegis-km3g.8) ([#30](https://github.com/intigraph/quechua/issues/30)) ([e2d0426](https://github.com/intigraph/quechua/commit/e2d0426fce049ee1ce32cbf07dcdb3a8252a87d0))
+
 ## [0.10.1](https://github.com/intigraph/quechua/compare/v0.10.0...v0.10.1) (2026-10-23)
 
 

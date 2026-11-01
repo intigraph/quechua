@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.11.1](https://github.com/intigraph/quechua/compare/v0.11.0...v0.11.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* **share:** admit tracked agent-file aliases and export the policy catalogue ([#37](https://github.com/intigraph/quechua/issues/37)) ([55e15b2](https://github.com/intigraph/quechua/commit/55e15b2ea39680309d9e21b6385fe98c28656d76))
+
 ## [0.11.0](https://github.com/intigraph/quechua/compare/v0.10.1...v0.11.0) (2026-10-29)
 
 

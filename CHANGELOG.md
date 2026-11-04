@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.12.0](https://github.com/intigraph/quechua/compare/v0.11.1...v0.12.0) (2026-11-04)
+
+
+### Features
+
+* **share:** publish pendant entities under w3id.org/intigraph names ([#39](https://github.com/intigraph/quechua/issues/39)) ([182f16c](https://github.com/intigraph/quechua/commit/182f16cb04791f8ee1b919422e4939ecdf9b5040))
+
 ## [0.11.1](https://github.com/intigraph/quechua/compare/v0.11.0...v0.11.1) (2026-11-01)
 
 

@@ -10,6 +10,14 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.12.2](https://github.com/intigraph/quechua/compare/v0.12.1...v0.12.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* cite indexed stable namespace heading ([#45](https://github.com/intigraph/quechua/issues/45)) ([9dc77eb](https://github.com/intigraph/quechua/commit/9dc77eb1374f5e34d5bf6f6dfe07b5a4b328d21f))
+* mark the registered namespace decision active ([#47](https://github.com/intigraph/quechua/issues/47)) ([897543d](https://github.com/intigraph/quechua/commit/897543d03d3dd57719175366f68d0d2b90d14d58))
+
 ## [0.12.1](https://github.com/intigraph/quechua/compare/v0.12.0...v0.12.1) (2026-11-05)
 
 

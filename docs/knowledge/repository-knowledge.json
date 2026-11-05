@@ -51,7 +51,7 @@
     {
       "kind": "decision",
       "source": "docs/installation-reference.md",
-      "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#candidate-stable-namespace",
+      "subject": "http://aegis.gastown.local/ontology/doc/quechua/docs%2Finstallation-reference.md#stable-namespace",
       "summary": "The installation reference records the registered Intigraph namespace and additive catalogs while preserving existing identifiers. Publication does not install aliases or migrate data; consumers must prove query and validation compatibility separately.",
       "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "type": "DecisionRecord",

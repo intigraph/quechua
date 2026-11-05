@@ -56,7 +56,7 @@
       "source_sha256": "41a1261a54cb298c67a70b374b5dfcc5845ee77182e54109a2dc570faf85d0c4",
       "type": "DecisionRecord",
       "properties": {
-        "status": "accepted",
+        "status": "active",
         "supersessionStatus": "not-recorded-in-source"
       },
       "see_also": [

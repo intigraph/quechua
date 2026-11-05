@@ -2,7 +2,7 @@ name: Release
 
 # Called after a merged release PR, with tag pushes retained as recovery.
 # Pages serves ns.ttl from main; releases publish an immutable, digest-listed copy:
-# consumers (caboodle first) pin quechua-ns-vX.Y.Z.ttl by the SHA-256 they
+# consumers (Tambo first) pin quechua-ns-vX.Y.Z.ttl by the SHA-256 they
 # reviewed, never the Pages URL.
 
 on:

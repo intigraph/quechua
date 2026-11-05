@@ -1,2 +1,5 @@
 __pycache__/
 .ruff_cache/
+
+# Legacy local tracker state is never published.
+/.beads/

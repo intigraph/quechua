@@ -114,7 +114,6 @@ See the repository tests and documentation checks before submitting a change.
 
 [License](LICENSE).
 
-
 ### Repository pendant provider
 
 Repository pendant builders require explicitly pinned model and tokenizer bytes

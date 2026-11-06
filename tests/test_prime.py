@@ -35,6 +35,40 @@ def snapshot(root):
 
 
 class Prime(unittest.TestCase):
+    def test_root_version_source_and_standalone_without_state(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            cli = root / "quechua.py"
+            cli.write_text(BUILD["render_cli"]())
+            home = root / "home"
+            home.mkdir()
+            before = snapshot(root)
+            for script in (ROOT / "scripts/prime.py", cli):
+                result = subprocess.run(
+                    [sys.executable, str(script), "--version"], cwd=root,
+                    env=dict(os.environ, HOME=str(home), PYTHONDONTWRITEBYTECODE="1"),
+                    capture_output=True, text=True, timeout=2)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, "quechua " + (ROOT / "version.txt").read_text().strip() + "\n")
+                self.assertEqual(result.stderr, "")
+            self.assertEqual(snapshot(root), before)
+            required = subprocess.run([sys.executable, str(cli)], capture_output=True, timeout=2)
+            self.assertEqual(required.returncode, 2)
+
+    def test_version_does_not_read_primer_or_package_state(self):
+        runtime = RUNTIME["main"].__globals__
+        with patch.dict(runtime, VERSION="1.2.3"), \
+                patch.dict(runtime, read_small=lambda _path: self.fail("unexpected file read")), \
+                patch.dict(runtime, bounded_state=lambda *_args: self.fail("unexpected state read")):
+            with self.assertRaises(SystemExit) as result:
+                RUNTIME["main"](["--version"])
+            self.assertEqual(result.exception.code, 0)
+        for invalid in ("", "not-a-version", "1.2.3\nforged"):
+            with patch.dict(runtime, VERSION=invalid):
+                with self.assertRaises(SystemExit) as result:
+                    RUNTIME["main"](["--version"])
+                self.assertEqual(result.exception.code, 2)
+
     def test_primer_copies_and_required_sections(self):
         self.assertEqual((ROOT / "skills/quechua/SKILL.md").read_text(), BUILD["skill_text"](),
                          "stale skill: run python3 scripts/build-prime.py --sync")

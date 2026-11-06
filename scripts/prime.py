@@ -28,6 +28,21 @@ def read_small(path):
     return data.decode("utf-8")
 
 
+class VersionAction(argparse.Action):
+    """Resolve version only when requested, without reading primer or state."""
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        try:
+            version = VERSION if VERSION is not None else read_small(
+                Path(__file__).resolve().parents[1] / "version.txt").strip()
+            if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version):
+                raise ValueError("invalid version")
+        except (OSError, ValueError, UnicodeError):
+            parser.exit(2, "Quechua version unreadable; use a complete checkout or release CLI.\n")
+        print("quechua " + version)
+        parser.exit()
+
+
 def package_state(directory, version, installed):
     """Describe a local identity; never imply validation of vocabulary bytes."""
     mode = "installed" if installed else "source"
@@ -110,6 +125,7 @@ def live_lines(state):
 def main(argv=None):
     """Print static orientation followed by optional local state."""
     parser = argparse.ArgumentParser(prog="quechua", description="Quechua vocabulary orientation")
+    parser.add_argument("--version", action=VersionAction, nargs=0, help="show the release version and exit")
     sub = parser.add_subparsers(dest="command", required=True)
     prime = sub.add_parser("prime", help="read-only agent primer and vocabulary release version")
     prime.add_argument("--brief", action="store_true", help="5 to 10 lines for stack aggregation")

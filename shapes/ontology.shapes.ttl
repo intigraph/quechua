@@ -1,3 +1,4 @@
+@prefix stable: <https://w3id.org/intigraph/quechua/ns#> .
 # Quechua ontology shapes
 #
 # SHACL shapes for the general knowledge graph: infrastructure (hosts,
@@ -318,18 +319,21 @@ quechua:DirectiveShape a sh:NodeShape ;
             sh:path rdfs:label ] ;
     sh:targetClass quechua:Directive .
 
+# Retention may precede policy/work-item evaluation, but never without a deadline.
+# A past deadline still admits the decision; administrators must see it overdue.
 quechua:DirectiveTraceabilityShape a sh:NodeShape ;
-    quipu:onViolation "emit" ;
-    sh:message "Untraced directive: it needs quechua:trackedBy a WorkItem and quechua:governedBy a Policy" ;
-    sh:or ( [ sh:class quechua:Policy ] [ sh:class quechua:AlertRule ] [ sh:property [ sh:class quechua:WorkItem ;
-                        sh:minCount 1 ;
-                        sh:path quechua:trackedBy ],
-                    [ sh:class quechua:Policy ;
-                        sh:minCount 1 ;
-                        sh:path quechua:governedBy ] ] ) ;
-    sh:property [ sh:minCount 1 ;
-            sh:path rdfs:label ] ;
-    sh:severity sh:Warning ;
+    quipu:onViolation "reject" ;
+    sh:message "Untraced directive: supply trackedBy a WorkItem AND governedBy a Policy, OR one traceabilityDueAt xsd:dateTime for evaluating those links" ;
+    sh:or ( [ sh:class quechua:Policy ] [ sh:class quechua:AlertRule ]
+        [ sh:property [ sh:class quechua:WorkItem ;
+                        sh:minCount 1 ; sh:path quechua:trackedBy ],
+                      [ sh:class quechua:Policy ;
+                        sh:minCount 1 ; sh:path quechua:governedBy ] ]
+        [ sh:property [ sh:path [ sh:alternativePath ( stable:traceabilityDueAt quechua:traceabilityDueAt ) ] ; sh:minCount 1 ] ] ) ;
+    sh:property [ sh:minCount 1 ; sh:path rdfs:label ],
+        [ sh:path [ sh:alternativePath ( stable:traceabilityDueAt quechua:traceabilityDueAt ) ] ; sh:maxCount 1 ;
+          sh:datatype xsd:dateTime ; sh:pattern "(Z|[+-][0-9]{2}:[0-9]{2})$" ] ;
+    sh:severity sh:Violation ;
     sh:targetClass quechua:Directive .
 
 quechua:DockerContainerShape a sh:NodeShape ;

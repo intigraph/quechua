@@ -196,3 +196,22 @@ Maintainers edit `docs/agent-primer.md`, then run
 `python3 scripts/build-prime.py --sync`. The existing unittest CI job rejects stale
 book/skill copies. Release packaging embeds that primer and `version.txt` in the
 CLI asset, then lists its digest beside the unchanged vocabulary assets.
+
+## Deferred directive traceability
+
+A Directive normally carries `trackedBy` a typed WorkItem and `governedBy` a
+typed Policy. To retain a decision before evaluating those links, supply one
+`https://w3id.org/intigraph/quechua/ns#traceabilityDueAt` literal with datatype
+`xsd:dateTime`. The legacy catalog spelling is also read; conflicting values
+across the two spellings are refused. This date is the deadline for evaluating
+the missing links, not an expiration date for the directive or permission to
+execute it. Choose an explicit date; fourteen days from capture is a suggested
+starting point, not a silently assigned value or an admission maximum.
+
+A past deadline still retains the decision and must appear in the administrator
+overdue view. Neither links nor a date is a blocking SHACL Violation. Missing
+labels, malformed/untyped dates and multiple date values also fail validation.
+Policy and AlertRule subclasses retain their existing traceability exemption.
+Publishing this shape does not load it into a running consumer; preserve the
+previous loaded shape for rollback and verify both accepted and refused writes
+after normal adoption.

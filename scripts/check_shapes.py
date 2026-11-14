@@ -32,7 +32,8 @@ PUBLIC_CLASSES = {SCHEMA.Action, SCHEMA.SoftwareSourceCode, SOSA.Observation,
                   DCAT.Distribution, DCAT.DataService}
 # The Quipu engine's own namespace, for its derivation properties.
 QUIPU = Namespace("http://quipu.dev/ontology/")
-ALLOWED = (NAMESPACE, str(SH), str(RDF), str(RDFS), str(XSD), str(QUIPU), str(SCHEMA), str(SOSA), str(DCAT), str(DCT))
+STABLE_NAMESPACE = "https://w3id.org/intigraph/quechua/ns#"
+ALLOWED = (NAMESPACE, STABLE_NAMESPACE, str(SH), str(RDF), str(RDFS), str(XSD), str(QUIPU), str(SCHEMA), str(SOSA), str(DCAT), str(DCT))
 # Public shapes must not carry private infrastructure names.
 FORBIDDEN = re.compile(
     r"\.(lan|svc|local|internal)\b|\b(10|192\.168|172\.(1[6-9]|2\d|3[01]))\.\d+\.\d+",
@@ -330,6 +331,9 @@ def check_terms(path: Path, shapes: Graph, classes: set, properties: set, root: 
         public_terms.update((root / "vocab" / f"{source['name']}.terms").read_text().split())
     for triple in shapes:
         for term in triple:
+            if isinstance(term, URIRef) and str(term).startswith(STABLE_NAMESPACE):
+                if URIRef(str(term).replace(STABLE_NAMESPACE, NAMESPACE, 1)) not in classes | properties:
+                    raise ValueError(f"{path.name}: undeclared stable term: {term}")
             if isinstance(term, URIRef) and not str(term).startswith(ALLOWED):
                 raise ValueError(
                     f"{path.name}: IRI outside the allowed namespaces: {term}"
@@ -493,3 +497,5 @@ if __name__ == "__main__":
     check(args.root)
     if args.selftest:
         selftest(args.root)
+        from directive_deferral_controls import check_directive_deferrals
+        check_directive_deferrals(Graph().parse(args.root / "shapes/ontology.shapes.ttl"))

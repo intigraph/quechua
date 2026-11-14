@@ -1,0 +1,10 @@
+Script started on 2026-11-14 02:21:56-05:00 [COMMAND="uv run --with rdflib==7.1.4 --with pyshacl==0.30.1 python docs/demos/directive-deferral/demo.py" <not executed on terminal>]
+Private schema demonstration; no running store or write.
+Base revision: c356c5b80f798c19df0201328f975577dd8c168d
+Candidate shape SHA256: c1e96b7370e046385986f86530a32bf515d1a096ae7b2a9b41c4aca3d0052563
+typed deadline only: base=False candidate=True PASS
+neither links nor date: base=False candidate=False PASS
+untyped deadline: base=False candidate=False PASS
+typed links: base=True candidate=True PASS
+
+Script done on 2026-11-14 02:21:56-05:00 [COMMAND_EXIT_CODE="0"]

@@ -427,6 +427,7 @@
 <https://scbrown.github.io/quechua/ns#touchesHost> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#touchesHost> .
 <https://scbrown.github.io/quechua/ns#touchesRepo> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#touchesRepo> .
 <https://scbrown.github.io/quechua/ns#touchesService> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#touchesService> .
+<https://scbrown.github.io/quechua/ns#traceabilityDueAt> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#traceabilityDueAt> .
 <https://scbrown.github.io/quechua/ns#trackedBy> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#trackedBy> .
 <https://scbrown.github.io/quechua/ns#traitAttachment> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#traitAttachment> .
 <https://scbrown.github.io/quechua/ns#traitAuthority> <http://www.w3.org/2002/07/owl#sameAs> <https://w3id.org/intigraph/quechua/ns#traitAuthority> .
@@ -1795,6 +1796,8 @@
 <https://w3id.org/intigraph/quechua/ns#touchesService> <http://www.w3.org/2000/01/rdf-schema#comment> "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://w3id.org/intigraph/quechua/ns#touchesService> <http://www.w3.org/2000/01/rdf-schema#label> "touchesService" .
 <https://w3id.org/intigraph/quechua/ns#touchesService> <http://www.w3.org/2002/07/owl#deprecated> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://w3id.org/intigraph/quechua/ns#traceabilityDueAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/intigraph/quechua/ns#traceabilityDueAt> <http://www.w3.org/2000/01/rdf-schema#label> "traceabilityDueAt" .
 <https://w3id.org/intigraph/quechua/ns#trackedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
 <https://w3id.org/intigraph/quechua/ns#trackedBy> <http://www.w3.org/2000/01/rdf-schema#label> "trackedBy" .
 <https://w3id.org/intigraph/quechua/ns#traitAttachment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .

@@ -287,6 +287,7 @@ touches	INFRA
 touchesHost	INFRA			
 touchesRepo	INFRA			
 touchesService	INFRA			
+traceabilityDueAt	KEEP	none		deadline to evaluate a directive policy and work-item links; not rule expiration
 trackedBy	KEEP	none		no public parent
 traitAttachment	INFRA			
 traitAuthority	INFRA			

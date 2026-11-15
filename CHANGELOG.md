@@ -10,6 +10,13 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.13.0](https://github.com/intigraph/quechua/compare/v0.12.3...v0.13.0) (2026-11-14)
+
+
+### Features
+
+* **directives:** retain decisions with traceability deadlines ([#51](https://github.com/intigraph/quechua/issues/51)) ([afd03bc](https://github.com/intigraph/quechua/commit/afd03bca87d667f7b7367a9faf3dfbfd946911a3))
+
 ## [0.12.3](https://github.com/intigraph/quechua/compare/v0.12.2...v0.12.3) (2026-11-06)
 
 

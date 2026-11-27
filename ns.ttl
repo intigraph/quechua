@@ -15,6 +15,7 @@
 <https://scbrown.github.io/quechua/ns#AnsibleRole> a rdfs:Class ; rdfs:label "AnsibleRole" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Artifact> a rdfs:Class ; rdfs:label "Artifact" ; owl:deprecated true ; dcterms:isReplacedBy <http://www.w3.org/ns/prov#Entity> .
 <https://scbrown.github.io/quechua/ns#BareMetalHost> a rdfs:Class ; rdfs:label "BareMetalHost" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#Bind> a rdfs:Class ; rdfs:label "Bind" .
 <https://scbrown.github.io/quechua/ns#Blocker> a rdfs:Class ; rdfs:label "Blocker" .
 <https://scbrown.github.io/quechua/ns#Bundle> a rdfs:Class ; rdfs:label "Bundle" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#CIWorkflow> a rdfs:Class ; rdfs:label "CIWorkflow" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
@@ -27,6 +28,8 @@
 <https://scbrown.github.io/quechua/ns#ClaudeCodeHook> a rdfs:Class ; rdfs:label "ClaudeCodeHook" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#CodeModule> a rdfs:Class ; rdfs:label "CodeModule" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/SoftwareSourceCode> .
 <https://scbrown.github.io/quechua/ns#CodeSymbol> a rdfs:Class ; rdfs:label "CodeSymbol" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/SoftwareSourceCode> .
+<https://scbrown.github.io/quechua/ns#Command> a rdfs:Class ; rdfs:label "Command" .
+<https://scbrown.github.io/quechua/ns#CommandCall> a rdfs:Class ; rdfs:label "CommandCall" .
 <https://scbrown.github.io/quechua/ns#CommandDiskImpactObservation> a rdfs:Class ; rdfs:label "CommandDiskImpactObservation" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Commit> a rdfs:Class ; rdfs:label "Commit" .
 <https://scbrown.github.io/quechua/ns#Component> a rdfs:Class ; rdfs:label "Component" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
@@ -61,6 +64,13 @@
 <https://scbrown.github.io/quechua/ns#GitRepository> a rdfs:Class ; rdfs:label "GitRepository" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/SoftwareSourceCode> .
 <https://scbrown.github.io/quechua/ns#GoldenPath> a rdfs:Class ; rdfs:label "GoldenPath" .
 <https://scbrown.github.io/quechua/ns#GoogleAccount> a rdfs:Class ; rdfs:label "GoogleAccount" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#GovernedAsset> a rdfs:Class ; rdfs:label "GovernedAsset" .
+<https://scbrown.github.io/quechua/ns#GovernedCredential> a rdfs:Class ; rdfs:label "GovernedCredential" .
+<https://scbrown.github.io/quechua/ns#GovernedMessage> a rdfs:Class ; rdfs:label "GovernedMessage" .
+<https://scbrown.github.io/quechua/ns#GovernedMoneyMovement> a rdfs:Class ; rdfs:label "GovernedMoneyMovement" .
+<https://scbrown.github.io/quechua/ns#GovernedOutsideParty> a rdfs:Class ; rdfs:label "GovernedOutsideParty" .
+<https://scbrown.github.io/quechua/ns#GovernedPerson> a rdfs:Class ; rdfs:label "GovernedPerson" .
+<https://scbrown.github.io/quechua/ns#GovernedSchedule> a rdfs:Class ; rdfs:label "GovernedSchedule" .
 <https://scbrown.github.io/quechua/ns#Host> a rdfs:Class ; rdfs:label "Host" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Incident> a rdfs:Class ; rdfs:label "Incident" .
 <https://scbrown.github.io/quechua/ns#IncidentClass> a rdfs:Class ; rdfs:label "IncidentClass" .
@@ -101,6 +111,7 @@
 <https://scbrown.github.io/quechua/ns#PushgatewayJob> a rdfs:Class ; rdfs:label "PushgatewayJob" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Reaction> a rdfs:Class ; rdfs:label "Reaction" .
 <https://scbrown.github.io/quechua/ns#ReactionFiring> a rdfs:Class ; rdfs:label "ReactionFiring" .
+<https://scbrown.github.io/quechua/ns#Receipt> a rdfs:Class ; rdfs:label "Receipt" .
 <https://scbrown.github.io/quechua/ns#RemoteHost> a rdfs:Class ; rdfs:label "RemoteHost" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#Repo> a rdfs:Class ; rdfs:label "Repo" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/SoftwareSourceCode> .
 <https://scbrown.github.io/quechua/ns#Requirement> a rdfs:Class ; rdfs:label "Requirement" .
@@ -155,6 +166,7 @@
 <https://scbrown.github.io/quechua/ns#alternatives> a rdf:Property ; rdfs:label "alternatives" .
 <https://scbrown.github.io/quechua/ns#appliesTo> a rdf:Property ; rdfs:label "appliesTo" .
 <https://scbrown.github.io/quechua/ns#applies_to> a rdf:Property ; rdfs:label "applies_to" .
+<https://scbrown.github.io/quechua/ns#assertedAt> a rdf:Property ; rdfs:label "assertedAt" .
 <https://scbrown.github.io/quechua/ns#assignsWorkflow> a rdf:Property ; rdfs:label "assignsWorkflow" .
 <https://scbrown.github.io/quechua/ns#atStep> a rdf:Property ; rdfs:label "atStep" .
 <https://scbrown.github.io/quechua/ns#attestationSignature> a rdf:Property ; rdfs:label "attestationSignature" .
@@ -170,14 +182,20 @@
 <https://scbrown.github.io/quechua/ns#backoffFormula> a rdf:Property ; rdfs:label "backoffFormula" .
 <https://scbrown.github.io/quechua/ns#backs_up> a rdf:Property ; rdfs:label "backs_up" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#binary> a rdf:Property ; rdfs:label "binary" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#bindFrom> a rdf:Property ; rdfs:label "bindFrom" .
+<https://scbrown.github.io/quechua/ns#bindsCommand> a rdf:Property ; rdfs:label "bindsCommand" .
 <https://scbrown.github.io/quechua/ns#blessingLevel> a rdf:Property ; rdfs:label "blessingLevel" .
 <https://scbrown.github.io/quechua/ns#blockedOn> a rdf:Property ; rdfs:label "blockedOn" .
 <https://scbrown.github.io/quechua/ns#blockerEvidence> a rdf:Property ; rdfs:label "blockerEvidence" .
 <https://scbrown.github.io/quechua/ns#blockerKind> a rdf:Property ; rdfs:label "blockerKind" .
+<https://scbrown.github.io/quechua/ns#boundParameter> a rdf:Property ; rdfs:label "boundParameter" .
 <https://scbrown.github.io/quechua/ns#boundary> a rdf:Property ; rdfs:label "boundary" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#by> a rdf:Property ; rdfs:label "by" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#byteCount> a rdf:Property ; rdfs:label "byteCount" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#calibrationBasis> a rdf:Property ; rdfs:label "calibrationBasis" .
+<https://scbrown.github.io/quechua/ns#callOutcome> a rdf:Property ; rdfs:label "callOutcome" .
+<https://scbrown.github.io/quechua/ns#callPayload> a rdf:Property ; rdfs:label "callPayload" .
+<https://scbrown.github.io/quechua/ns#callsCommand> a rdf:Property ; rdfs:label "callsCommand" .
 <https://scbrown.github.io/quechua/ns#candidateSource> a rdf:Property ; rdfs:label "candidateSource" .
 <https://scbrown.github.io/quechua/ns#canonicalGraphHash> a rdf:Property ; rdfs:label "canonicalGraphHash" .
 <https://scbrown.github.io/quechua/ns#certificationSeal> a rdf:Property ; rdfs:label "certificationSeal" .
@@ -185,9 +203,11 @@
 <https://scbrown.github.io/quechua/ns#chose> a rdf:Property ; rdfs:label "chose" .
 <https://scbrown.github.io/quechua/ns#chunkOrder> a rdf:Property ; rdfs:label "chunkOrder" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#claim> a rdf:Property ; rdfs:label "claim" .
+<https://scbrown.github.io/quechua/ns#commandName> a rdf:Property ; rdfs:label "commandName" .
 <https://scbrown.github.io/quechua/ns#commandSignature> a rdf:Property ; rdfs:label "commandSignature" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#commandText> a rdf:Property ; rdfs:label "commandText" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#committed_to> a rdf:Property ; rdfs:label "committed_to" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#competencyQuestion> a rdf:Property ; rdfs:label "competencyQuestion" .
 <https://scbrown.github.io/quechua/ns#condition> a rdf:Property ; rdfs:label "condition" .
 <https://scbrown.github.io/quechua/ns#confidence> a rdf:Property ; rdfs:label "confidence" .
 <https://scbrown.github.io/quechua/ns#configPath> a rdf:Property ; rdfs:label "configPath" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
@@ -284,6 +304,7 @@
 <https://scbrown.github.io/quechua/ns#indexes> a rdf:Property ; rdfs:label "indexes" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#inheritedByDelegates> a rdf:Property ; rdfs:label "inheritedByDelegates" .
 <https://scbrown.github.io/quechua/ns#ipAddress> a rdf:Property ; rdfs:label "ipAddress" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#irreversible> a rdf:Property ; rdfs:label "irreversible" .
 <https://scbrown.github.io/quechua/ns#issuedBy> a rdf:Property ; rdfs:label "issuedBy" .
 <https://scbrown.github.io/quechua/ns#keeper> a rdf:Property ; rdfs:label "keeper" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#kind> a rdf:Property ; rdfs:label "kind" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
@@ -327,6 +348,7 @@
 <https://scbrown.github.io/quechua/ns#ownedBy> a rdf:Property ; rdfs:label "ownedBy" .
 <https://scbrown.github.io/quechua/ns#owner> a rdf:Property ; rdfs:label "owner" .
 <https://scbrown.github.io/quechua/ns#owns> a rdf:Property ; rdfs:label "owns" .
+<https://scbrown.github.io/quechua/ns#parameterShape> a rdf:Property ; rdfs:label "parameterShape" .
 <https://scbrown.github.io/quechua/ns#parentCollection> a rdf:Property ; rdfs:label "parentCollection" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#path> a rdf:Property ; rdfs:label "path" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#performedBy> a rdf:Property ; rdfs:label "performedBy" ; owl:deprecated true ; dcterms:isReplacedBy <http://www.w3.org/ns/prov#wasAssociatedWith> .
@@ -356,11 +378,15 @@
 <https://scbrown.github.io/quechua/ns#publicKey> a rdf:Property ; rdfs:label "publicKey" .
 <https://scbrown.github.io/quechua/ns#publisherAttestation> a rdf:Property ; rdfs:label "publisherAttestation" .
 <https://scbrown.github.io/quechua/ns#purpose> a rdf:Property ; rdfs:label "purpose" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#reach> a rdf:Property ; rdfs:label "reach" .
+<https://scbrown.github.io/quechua/ns#receiptFor> a rdf:Property ; rdfs:label "receiptFor" .
+<https://scbrown.github.io/quechua/ns#receivedAt> a rdf:Property ; rdfs:label "receivedAt" .
 <https://scbrown.github.io/quechua/ns#reference> a rdf:Property ; rdfs:label "reference" ; owl:deprecated true ; dcterms:isReplacedBy <http://purl.org/dc/terms/references> .
 <https://scbrown.github.io/quechua/ns#references> a rdf:Property ; rdfs:label "references" ; owl:deprecated true ; dcterms:isReplacedBy <http://purl.org/dc/terms/references> .
 <https://scbrown.github.io/quechua/ns#refreshedBy> a rdf:Property ; rdfs:label "refreshedBy" .
 <https://scbrown.github.io/quechua/ns#regex> a rdf:Property ; rdfs:label "regex" .
 <https://scbrown.github.io/quechua/ns#registry> a rdf:Property ; rdfs:label "registry" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#rejectionReason> a rdf:Property ; rdfs:label "rejectionReason" .
 <https://scbrown.github.io/quechua/ns#relationship> a rdf:Property ; rdfs:label "relationship" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#relativePath> a rdf:Property ; rdfs:label "relativePath" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#repo> a rdf:Property ; rdfs:label "repo" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
@@ -384,6 +410,7 @@
 <https://scbrown.github.io/quechua/ns#routedTo> a rdf:Property ; rdfs:label "routedTo" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#routes_to> a rdf:Property ; rdfs:label "routes_to" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#runOf> a rdf:Property ; rdfs:label "runOf" .
+<https://scbrown.github.io/quechua/ns#runsVia> a rdf:Property ; rdfs:label "runsVia" .
 <https://scbrown.github.io/quechua/ns#runs_on> a rdf:Property ; rdfs:label "runs_on" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#schedule> a rdf:Property ; rdfs:label "schedule" .
 <https://scbrown.github.io/quechua/ns#scopeEntity> a rdf:Property ; rdfs:label "scopeEntity" .
@@ -445,6 +472,8 @@
 <https://scbrown.github.io/quechua/ns#triggerKind> a rdf:Property ; rdfs:label "triggerKind" .
 <https://scbrown.github.io/quechua/ns#triggered_by> a rdf:Property ; rdfs:label "triggered_by" .
 <https://scbrown.github.io/quechua/ns#triggers> a rdf:Property ; rdfs:label "triggers" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
+<https://scbrown.github.io/quechua/ns#underWarrant> a rdf:Property ; rdfs:label "underWarrant" .
+<https://scbrown.github.io/quechua/ns#undoneBy> a rdf:Property ; rdfs:label "undoneBy" .
 <https://scbrown.github.io/quechua/ns#ungovernedReason> a rdf:Property ; rdfs:label "ungovernedReason" .
 <https://scbrown.github.io/quechua/ns#unit> a rdf:Property ; rdfs:label "unit" ; owl:deprecated true ; dcterms:isReplacedBy <https://schema.org/unitText> .
 <https://scbrown.github.io/quechua/ns#untrustedOrigin> a rdf:Property ; rdfs:label "untrustedOrigin" .

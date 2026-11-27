@@ -140,3 +140,14 @@ Component	INFRA			no clean public class
 DesignPrinciple	INFRA			
 AdmissionPolicy	KEEP	subClassOf	odrl:Policy	proposed import-admission policy with permission/prohibition/obligation rules and trust/evidence constraints; no activation or ODRL-conformance claim from class mapping
 ScheduledJob	KEEP	subClassOf	schema:Action	explicit scheduled-job profile discriminator; distinct admission from tracker Actions
+Command	KEEP	subClassOf	prov:Plan	one governed operation an interface offers; a governed ToolClass, closeMatch WoT ActionAffordance
+CommandCall	KEEP	subClassOf	schema:Action	the closed envelope of one call to a Command; closeMatch Holon CommandEvent
+Bind	KEEP	subClassOf	prov:Entity	fixes one command parameter from the seed, pendant or warrant
+Receipt	KEEP	subClassOf	prov:Entity	record of one call: outcome, rejection reason and both clocks
+GovernedAsset	KEEP	subClassOf	prov:Entity	governed parent class: a policy targets it and a new kind subclasses it
+GovernedCredential	KEEP	subClassOf	prov:Entity	governed parent class: a policy targets it and a new kind subclasses it
+GovernedMessage	KEEP	subClassOf	schema:Message	governed parent class: a policy targets it and a new kind subclasses it
+GovernedMoneyMovement	KEEP	subClassOf	schema:MoneyTransfer	governed parent class: a policy targets it and a new kind subclasses it
+GovernedOutsideParty	KEEP	subClassOf	prov:Agent	governed parent class: a policy targets it and a new kind subclasses it
+GovernedPerson	KEEP	subClassOf	schema:Person	governed parent class: a policy targets it and a new kind subclasses it
+GovernedSchedule	KEEP	subClassOf	schema:Schedule	governed parent class: a policy targets it and a new kind subclasses it

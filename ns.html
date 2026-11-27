@@ -12,6 +12,7 @@
 <li id="AnsibleRole"><code>quechua:AnsibleRole</code> — class — deprecated, homelab-specific</li>
 <li id="Artifact"><code>quechua:Artifact</code> — class — deprecated, use <a href="http://www.w3.org/ns/prov#Entity">prov:Entity</a></li>
 <li id="BareMetalHost"><code>quechua:BareMetalHost</code> — class — deprecated, homelab-specific</li>
+<li id="Bind"><code>quechua:Bind</code> — class</li>
 <li id="Blocker"><code>quechua:Blocker</code> — class</li>
 <li id="Bundle"><code>quechua:Bundle</code> — class — deprecated, homelab-specific</li>
 <li id="CIWorkflow"><code>quechua:CIWorkflow</code> — class — deprecated, homelab-specific</li>
@@ -24,6 +25,8 @@
 <li id="ClaudeCodeHook"><code>quechua:ClaudeCodeHook</code> — class — deprecated, homelab-specific</li>
 <li id="CodeModule"><code>quechua:CodeModule</code> — class — deprecated, use <a href="https://schema.org/SoftwareSourceCode">schema:SoftwareSourceCode</a></li>
 <li id="CodeSymbol"><code>quechua:CodeSymbol</code> — class — deprecated, use <a href="https://schema.org/SoftwareSourceCode">schema:SoftwareSourceCode</a></li>
+<li id="Command"><code>quechua:Command</code> — class</li>
+<li id="CommandCall"><code>quechua:CommandCall</code> — class</li>
 <li id="CommandDiskImpactObservation"><code>quechua:CommandDiskImpactObservation</code> — class — deprecated, homelab-specific</li>
 <li id="Commit"><code>quechua:Commit</code> — class</li>
 <li id="Component"><code>quechua:Component</code> — class — deprecated, homelab-specific</li>
@@ -58,6 +61,13 @@
 <li id="GitRepository"><code>quechua:GitRepository</code> — class — deprecated, use <a href="https://schema.org/SoftwareSourceCode">schema:SoftwareSourceCode</a></li>
 <li id="GoldenPath"><code>quechua:GoldenPath</code> — class</li>
 <li id="GoogleAccount"><code>quechua:GoogleAccount</code> — class — deprecated, homelab-specific</li>
+<li id="GovernedAsset"><code>quechua:GovernedAsset</code> — class</li>
+<li id="GovernedCredential"><code>quechua:GovernedCredential</code> — class</li>
+<li id="GovernedMessage"><code>quechua:GovernedMessage</code> — class</li>
+<li id="GovernedMoneyMovement"><code>quechua:GovernedMoneyMovement</code> — class</li>
+<li id="GovernedOutsideParty"><code>quechua:GovernedOutsideParty</code> — class</li>
+<li id="GovernedPerson"><code>quechua:GovernedPerson</code> — class</li>
+<li id="GovernedSchedule"><code>quechua:GovernedSchedule</code> — class</li>
 <li id="Host"><code>quechua:Host</code> — class — deprecated, homelab-specific</li>
 <li id="Incident"><code>quechua:Incident</code> — class</li>
 <li id="IncidentClass"><code>quechua:IncidentClass</code> — class</li>
@@ -98,6 +108,7 @@
 <li id="PushgatewayJob"><code>quechua:PushgatewayJob</code> — class — deprecated, homelab-specific</li>
 <li id="Reaction"><code>quechua:Reaction</code> — class</li>
 <li id="ReactionFiring"><code>quechua:ReactionFiring</code> — class</li>
+<li id="Receipt"><code>quechua:Receipt</code> — class</li>
 <li id="RemoteHost"><code>quechua:RemoteHost</code> — class — deprecated, homelab-specific</li>
 <li id="Repo"><code>quechua:Repo</code> — class — deprecated, use <a href="https://schema.org/SoftwareSourceCode">schema:SoftwareSourceCode</a></li>
 <li id="Requirement"><code>quechua:Requirement</code> — class</li>
@@ -152,6 +163,7 @@
 <li id="alternatives"><code>quechua:alternatives</code> — property</li>
 <li id="appliesTo"><code>quechua:appliesTo</code> — property</li>
 <li id="applies_to"><code>quechua:applies_to</code> — property</li>
+<li id="assertedAt"><code>quechua:assertedAt</code> — property</li>
 <li id="assignsWorkflow"><code>quechua:assignsWorkflow</code> — property</li>
 <li id="atStep"><code>quechua:atStep</code> — property</li>
 <li id="attestationSignature"><code>quechua:attestationSignature</code> — property</li>
@@ -167,14 +179,20 @@
 <li id="backoffFormula"><code>quechua:backoffFormula</code> — property</li>
 <li id="backs_up"><code>quechua:backs_up</code> — property — deprecated, homelab-specific</li>
 <li id="binary"><code>quechua:binary</code> — property — deprecated, homelab-specific</li>
+<li id="bindFrom"><code>quechua:bindFrom</code> — property</li>
+<li id="bindsCommand"><code>quechua:bindsCommand</code> — property</li>
 <li id="blessingLevel"><code>quechua:blessingLevel</code> — property</li>
 <li id="blockedOn"><code>quechua:blockedOn</code> — property</li>
 <li id="blockerEvidence"><code>quechua:blockerEvidence</code> — property</li>
 <li id="blockerKind"><code>quechua:blockerKind</code> — property</li>
+<li id="boundParameter"><code>quechua:boundParameter</code> — property</li>
 <li id="boundary"><code>quechua:boundary</code> — property — deprecated, homelab-specific</li>
 <li id="by"><code>quechua:by</code> — property — deprecated, homelab-specific</li>
 <li id="byteCount"><code>quechua:byteCount</code> — property — deprecated, homelab-specific</li>
 <li id="calibrationBasis"><code>quechua:calibrationBasis</code> — property</li>
+<li id="callOutcome"><code>quechua:callOutcome</code> — property</li>
+<li id="callPayload"><code>quechua:callPayload</code> — property</li>
+<li id="callsCommand"><code>quechua:callsCommand</code> — property</li>
 <li id="candidateSource"><code>quechua:candidateSource</code> — property</li>
 <li id="canonicalGraphHash"><code>quechua:canonicalGraphHash</code> — property</li>
 <li id="certificationSeal"><code>quechua:certificationSeal</code> — property</li>
@@ -182,9 +200,11 @@
 <li id="chose"><code>quechua:chose</code> — property</li>
 <li id="chunkOrder"><code>quechua:chunkOrder</code> — property — deprecated, homelab-specific</li>
 <li id="claim"><code>quechua:claim</code> — property</li>
+<li id="commandName"><code>quechua:commandName</code> — property</li>
 <li id="commandSignature"><code>quechua:commandSignature</code> — property — deprecated, homelab-specific</li>
 <li id="commandText"><code>quechua:commandText</code> — property — deprecated, homelab-specific</li>
 <li id="committed_to"><code>quechua:committed_to</code> — property — deprecated, homelab-specific</li>
+<li id="competencyQuestion"><code>quechua:competencyQuestion</code> — property</li>
 <li id="condition"><code>quechua:condition</code> — property</li>
 <li id="confidence"><code>quechua:confidence</code> — property</li>
 <li id="configPath"><code>quechua:configPath</code> — property — deprecated, homelab-specific</li>
@@ -281,6 +301,7 @@
 <li id="indexes"><code>quechua:indexes</code> — property — deprecated, homelab-specific</li>
 <li id="inheritedByDelegates"><code>quechua:inheritedByDelegates</code> — property</li>
 <li id="ipAddress"><code>quechua:ipAddress</code> — property — deprecated, homelab-specific</li>
+<li id="irreversible"><code>quechua:irreversible</code> — property</li>
 <li id="issuedBy"><code>quechua:issuedBy</code> — property</li>
 <li id="keeper"><code>quechua:keeper</code> — property — deprecated, homelab-specific</li>
 <li id="kind"><code>quechua:kind</code> — property — deprecated, homelab-specific</li>
@@ -324,6 +345,7 @@
 <li id="ownedBy"><code>quechua:ownedBy</code> — property</li>
 <li id="owner"><code>quechua:owner</code> — property</li>
 <li id="owns"><code>quechua:owns</code> — property</li>
+<li id="parameterShape"><code>quechua:parameterShape</code> — property</li>
 <li id="parentCollection"><code>quechua:parentCollection</code> — property — deprecated, homelab-specific</li>
 <li id="path"><code>quechua:path</code> — property — deprecated, homelab-specific</li>
 <li id="performedBy"><code>quechua:performedBy</code> — property — deprecated, use <a href="http://www.w3.org/ns/prov#wasAssociatedWith">prov:wasAssociatedWith</a></li>
@@ -353,11 +375,15 @@
 <li id="publicKey"><code>quechua:publicKey</code> — property</li>
 <li id="publisherAttestation"><code>quechua:publisherAttestation</code> — property</li>
 <li id="purpose"><code>quechua:purpose</code> — property — deprecated, homelab-specific</li>
+<li id="reach"><code>quechua:reach</code> — property</li>
+<li id="receiptFor"><code>quechua:receiptFor</code> — property</li>
+<li id="receivedAt"><code>quechua:receivedAt</code> — property</li>
 <li id="reference"><code>quechua:reference</code> — property — deprecated, use <a href="http://purl.org/dc/terms/references">dcterms:references</a></li>
 <li id="references"><code>quechua:references</code> — property — deprecated, use <a href="http://purl.org/dc/terms/references">dcterms:references</a></li>
 <li id="refreshedBy"><code>quechua:refreshedBy</code> — property</li>
 <li id="regex"><code>quechua:regex</code> — property</li>
 <li id="registry"><code>quechua:registry</code> — property — deprecated, homelab-specific</li>
+<li id="rejectionReason"><code>quechua:rejectionReason</code> — property</li>
 <li id="relationship"><code>quechua:relationship</code> — property — deprecated, homelab-specific</li>
 <li id="relativePath"><code>quechua:relativePath</code> — property — deprecated, homelab-specific</li>
 <li id="repo"><code>quechua:repo</code> — property — deprecated, homelab-specific</li>
@@ -381,6 +407,7 @@
 <li id="routedTo"><code>quechua:routedTo</code> — property — deprecated, homelab-specific</li>
 <li id="routes_to"><code>quechua:routes_to</code> — property — deprecated, homelab-specific</li>
 <li id="runOf"><code>quechua:runOf</code> — property</li>
+<li id="runsVia"><code>quechua:runsVia</code> — property</li>
 <li id="runs_on"><code>quechua:runs_on</code> — property — deprecated, homelab-specific</li>
 <li id="schedule"><code>quechua:schedule</code> — property</li>
 <li id="scopeEntity"><code>quechua:scopeEntity</code> — property</li>
@@ -442,6 +469,8 @@
 <li id="triggerKind"><code>quechua:triggerKind</code> — property</li>
 <li id="triggered_by"><code>quechua:triggered_by</code> — property</li>
 <li id="triggers"><code>quechua:triggers</code> — property — deprecated, homelab-specific</li>
+<li id="underWarrant"><code>quechua:underWarrant</code> — property</li>
+<li id="undoneBy"><code>quechua:undoneBy</code> — property</li>
 <li id="ungovernedReason"><code>quechua:ungovernedReason</code> — property</li>
 <li id="unit"><code>quechua:unit</code> — property — deprecated, use <a href="https://schema.org/unitText">schema:unitText</a></li>
 <li id="untrustedOrigin"><code>quechua:untrustedOrigin</code> — property</li>

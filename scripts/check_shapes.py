@@ -46,6 +46,23 @@ FORBIDDEN = re.compile(
 WORK_ITEM = "work-item-valid.ttl"
 CAMAYOC = "camayoc-valid.ttl"
 ONTOLOGY = "ontology-valid.ttl"
+CAPABILITY = "capability-valid.ttl"
+CAP = Namespace("https://example.org/capability/")
+_CAPABILITY_CASES = (
+    ("command-without-competency", (CAP.start, Q.competencyQuestion, Literal("Which servers did this job start, and until when?")), None, Q.competencyQuestion),
+    ("command-unknown-reach", (CAP.start, Q.reach, Literal("act")), (CAP.start, Q.reach, Literal("effect")), Q.reach),
+    ("command-bad-name", (CAP.start, Q.commandName, Literal("games.start")), (CAP.start, Q.commandName, Literal("start")), Q.commandName),
+    ("act-without-undo", (CAP.start, Q.undoneBy, CAP.stop), None, None),
+    ("act-ungoverned", (CAP.start, Q.governedAt, Literal("PAG")), None, None),
+    ("call-without-warrant", (CAP["call-1"], Q.underWarrant, Literal("warrant-1")), None, Q.underWarrant),
+    ("receipt-unknown-outcome", (CAP["receipt-1"], Q.callOutcome, Literal("asserted")), (CAP["receipt-1"], Q.callOutcome, Literal("done")), Q.callOutcome),
+    ("rejection-without-reason", (CAP["receipt-2"], Q.rejectionReason, Literal("authorisation")), None, None),
+    ("rejection-unknown-reason", (CAP["receipt-2"], Q.rejectionReason, Literal("authorisation")), (CAP["receipt-2"], Q.rejectionReason, Literal("timeout")), Q.rejectionReason),
+    ("assertion-with-reason", (CAP["receipt-1"], Q.callOutcome, Literal("asserted")), (CAP["receipt-1"], Q.rejectionReason, Literal("expiry")), None),
+    ("receipt-one-clock", (CAP["receipt-1"], Q.receivedAt, Literal("2026-11-27T01:00:02Z", datatype=XSD.dateTime)), None, Q.receivedAt),
+    ("bind-free-expression", (CAP["bind-server"], Q.bindFrom, Literal("seed.subject")), (CAP["bind-server"], Q.bindFrom, Literal("lookup(seed)")), Q.bindFrom),
+)
+CAPABILITY_CASES = tuple((CAPABILITY, *case) for case in _CAPABILITY_CASES)
 _WORK_ITEM_CASES = (
     (
         "missing-sourceKind",
@@ -323,6 +340,10 @@ def check_terms(path: Path, shapes: Graph, classes: set, properties: set, root: 
     if match := FORBIDDEN.search(text):
         raise ValueError(f"{path.name}: private name {match.group(0)!r}")
     shape_names = set(shapes.subjects(RDF.type, SH.NodeShape))
+    # SHACL core only: Quipu refuses SHACL-SPARQL and custom targets.
+    for refused in (SH.sparql, SH.SPARQLConstraint, SH.SPARQLTarget, SH.target, SH.select, SH.ask):
+        if (None, refused, None) in shapes or (None, None, refused) in shapes:
+            raise ValueError(f"{path.name}: SHACL-SPARQL is refused: {refused}")
     with (root / "vocab/SOURCES.tsv").open() as handle:
         rows = csv.DictReader((line for line in handle if not line.startswith("#")), delimiter="\t")
         sources = [row for row in rows if row["prefix"] in {"schema", "sosa", "dcat", "dcterms"}]
@@ -380,7 +401,7 @@ def check_examples(shapes: Graph, examples: Path) -> int:
         (CAMAYOC, "usage-without-public-type", (REC["usage-1"], RDF.type, SOSA.Observation), None, RDF.type),
         ("observation-governance-valid.ttl", "public-observation-without-source", (URIRef("https://example.org/observations/temperature"), Q.sourceKind, Literal("observed")), None, Q.sourceKind),
     )
-    cases = CASES + CAMAYOC_CASES + ONTOLOGY_CASES + action_cases + specialization_cases
+    cases = CASES + CAMAYOC_CASES + ONTOLOGY_CASES + CAPABILITY_CASES + action_cases + specialization_cases
     for example, name, remove, add, path in cases:
         base = valid[example]
         if remove not in base:

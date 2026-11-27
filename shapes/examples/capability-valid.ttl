@@ -1,0 +1,44 @@
+@prefix quechua: <https://scbrown.github.io/quechua/ns#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://example.org/capability/> .
+
+ex:status a quechua:Command ;
+    quechua:commandName "games.status" ; quechua:reach "read" ;
+    quechua:runsVia "games-service" ;
+    quechua:competencyQuestion "Is the server this seed names running?" .
+
+ex:stop a quechua:Command ;
+    quechua:commandName "games.stop" ; quechua:reach "act" ;
+    quechua:runsVia "games-service" ; quechua:governedAt "PAG" ;
+    quechua:irreversible false ; quechua:undoneBy ex:start ;
+    quechua:competencyQuestion "Which servers did this job stop?" .
+
+ex:start a quechua:Command ;
+    quechua:commandName "games.start" ; quechua:reach "act" ;
+    quechua:parameterShape ex:StartParameters ;
+    quechua:runsVia "games-service" ; quechua:governedAt "PAG" ;
+    quechua:undoneBy ex:stop ;
+    quechua:competencyQuestion "Which servers did this job start, and until when?" .
+
+ex:bind-server a quechua:Bind ;
+    quechua:bindsCommand ex:start ; quechua:boundParameter "server" ;
+    quechua:bindFrom "seed.subject" .
+
+ex:call-1 a quechua:CommandCall ;
+    quechua:callsCommand ex:start ; quechua:underWarrant "warrant-1" ;
+    schema:expires "2026-11-28T00:00:00Z"^^xsd:dateTime .
+
+ex:call-2 a quechua:CommandCall ;
+    quechua:callsCommand ex:start ; quechua:underWarrant "warrant-1" .
+
+ex:receipt-1 a quechua:Receipt ;
+    quechua:receiptFor ex:call-1 ; quechua:callOutcome "asserted" ;
+    quechua:assertedAt "2026-11-27T01:00:00Z"^^xsd:dateTime ;
+    quechua:receivedAt "2026-11-27T01:00:02Z"^^xsd:dateTime .
+
+ex:receipt-2 a quechua:Receipt ;
+    quechua:receiptFor ex:call-2 ; quechua:callOutcome "rejected" ;
+    quechua:rejectionReason "authorisation" ;
+    quechua:assertedAt "2026-11-27T01:05:00Z"^^xsd:dateTime ;
+    quechua:receivedAt "2026-11-27T01:05:01Z"^^xsd:dateTime .

@@ -1,0 +1,17 @@
+# Close matches from Quechua capability terms to W3C draft vocabularies that
+# are not pinned in vocab/SOURCES.tsv: the Web of Things Thing Description and
+# the W3C Holon Community Group's event drafts. Hand-maintained, because
+# scripts/trim.py aligns only to pinned vocabularies.
+#
+# skos:closeMatch only. It is not inferential, and Quechua does not adopt these
+# namespaces: no Quechua shape or record uses them. The Holon drafts are marked
+# non-canonical and use both http and https forms of their namespace; the https
+# form is recorded here and is revisited when the group publishes one.
+@prefix quechua: <https://scbrown.github.io/quechua/ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix td: <https://www.w3.org/2019/wot/td#> .
+@prefix hev: <https://w3id.org/holon/event/> .
+
+quechua:Command skos:closeMatch td:ActionAffordance .
+
+quechua:CommandCall skos:closeMatch hev:CommandEvent .

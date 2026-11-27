@@ -1,0 +1,115 @@
+# Quechua capability shapes, v0
+#
+# Commands, calls, binds and receipts: the capability layer's declarations and
+# the record every call leaves. Design: Capability Layer Design (2026-11-25),
+# sections "Initial vocabulary and shapes", "Adding new entities" and
+# "Following the Holon group".
+#
+# SHACL core only. Quipu refuses SHACL-SPARQL, so no sh:sparql constraint and
+# no custom target appears here; scripts/check_shapes.py refuses either.
+#
+# Names reconciled with the warrants design and Quipu's governance shapes:
+#   - `reach` (read, write, act, outward, spend) is how far a Command reaches.
+#     It is NOT a policy `effect`; that property keeps its shipped values.
+#   - A `Bind` fixes one command parameter. It is NOT a Yupana "binding"
+#     (a policy attached to a boundary).
+#   - Nothing here is a "grant": a grant is a task pendant plus a warrant.
+#   - `callOutcome` and `rejectionReason` are new and closed, rather than new
+#     values of the shipped `outcome`.
+#
+# A Command is a governed ToolClass: anything beyond `read` must name the
+# enforcement point it traverses (`governedAt`). Holon and WoT terms are
+# aligned by skos:closeMatch in ../holon-alignments.ttl; their namespaces are
+# not adopted.
+#
+# The governed parent classes (GovernedAsset, GovernedPerson,
+# GovernedMoneyMovement, GovernedCredential, GovernedOutsideParty,
+# GovernedMessage, GovernedSchedule) carry no instance shape here. They are
+# what policies target; a proposed new kind must be an rdfs:subClassOf one of
+# them, which Quipu's schema proposal path checks before a person accepts it.
+
+@prefix quechua: <https://scbrown.github.io/quechua/ns#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix quipu:   <http://quipu.dev/ontology/> .
+@prefix schema:  <https://schema.org/> .
+
+# ── Command ──────────────────────────────────────────────────────
+# A declared operation. No competency question, no command. Anything that
+# acts names its undo or says it has none. Anything beyond a read is governed.
+quechua:CommandShape a sh:NodeShape ;
+    quipu:onViolation "reject" ;
+    sh:targetClass quechua:Command ;
+    sh:property [ sh:path quechua:commandName ; sh:datatype xsd:string ;
+                  sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:pattern "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$" ] ;
+    sh:property [ sh:path quechua:reach ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "read" "write" "act" "outward" "spend" ) ] ;
+    sh:property [ sh:path quechua:parameterShape ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path quechua:runsVia ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path quechua:competencyQuestion ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path quechua:undoneBy ; sh:class quechua:Command ] ;
+    sh:property [ sh:path quechua:irreversible ; sh:datatype xsd:boolean ; sh:maxCount 1 ] ;
+    # The same enforcement-point enum as Quipu's ToolClass governedAt.
+    sh:property [ sh:path quechua:governedAt ; sh:datatype xsd:string ;
+                  sh:in ( "PAG" "ATM" "PAA" "tool_layer" "policy_layer" ) ] ;
+    sh:or (
+        [ sh:path quechua:reach ; sh:in ( "read" "write" ) ]
+        [ sh:path quechua:undoneBy ; sh:minCount 1 ]
+        [ sh:path quechua:irreversible ; sh:hasValue true ]
+    ) ;
+    sh:or (
+        [ sh:path quechua:reach ; sh:hasValue "read" ]
+        [ sh:path quechua:governedAt ; sh:minCount 1 ]
+    ) ;
+    sh:message "A Command needs one dotted commandName, one reach, a runsVia and a competencyQuestion; act/outward/spend need undoneBy or irreversible true; anything beyond read needs governedAt." .
+
+# ── CommandCall ──────────────────────────────────────────────────
+# The closed envelope. The payload is the command's own parameterShape.
+quechua:CommandCallShape a sh:NodeShape ;
+    quipu:onViolation "reject" ;
+    sh:targetClass quechua:CommandCall ;
+    sh:property [ sh:path quechua:callsCommand ; sh:class quechua:Command ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:underWarrant ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path schema:expires ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ;
+    sh:message "A CommandCall names exactly one callsCommand and one underWarrant." .
+
+# ── Receipt ──────────────────────────────────────────────────────
+# Every call ends in an assertion or a typed rejection, and a refused call is
+# recorded, never dropped. Both clocks are kept.
+quechua:ReceiptShape a sh:NodeShape ;
+    quipu:onViolation "reject" ;
+    sh:targetClass quechua:Receipt ;
+    sh:property [ sh:path quechua:receiptFor ; sh:class quechua:CommandCall ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:assertedAt ; sh:datatype xsd:dateTime ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:receivedAt ; sh:datatype xsd:dateTime ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:callOutcome ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "asserted" "rejected" ) ] ;
+    sh:property [ sh:path quechua:rejectionReason ; sh:maxCount 1 ;
+                  sh:in ( "validation" "authorisation" "expiry" "precondition" ) ] ;
+    sh:xone (
+        [ sh:property [ sh:path quechua:callOutcome ; sh:hasValue "asserted" ] ,
+                      [ sh:path quechua:rejectionReason ; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path quechua:callOutcome ; sh:hasValue "rejected" ] ,
+                      [ sh:path quechua:rejectionReason ; sh:minCount 1 ] ]
+    ) ;
+    sh:message "A Receipt records one receiptFor call, assertedAt and receivedAt, and one callOutcome; a rejected call says which of validation, authorisation, expiry or precondition, and an asserted call carries no rejectionReason." .
+
+# ── Bind ─────────────────────────────────────────────────────────
+# A dotted path into the seed, the pendant or the warrant, or a constant.
+# No expressions, so a bind can be read, diffed and checked here.
+quechua:BindShape a sh:NodeShape ;
+    quipu:onViolation "reject" ;
+    sh:targetClass quechua:Bind ;
+    sh:property [ sh:path quechua:bindsCommand ; sh:class quechua:Command ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:boundParameter ; sh:datatype xsd:string ;
+                  sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[a-z][A-Za-z0-9_]*$" ] ;
+    sh:property [ sh:path quechua:bindFrom ; sh:datatype xsd:string ;
+                  sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:pattern "^((seed|pendant|warrant)\\.[a-z][A-Za-z0-9_.]*|const:.+)$" ] ;
+    sh:message "A Bind names one bindsCommand, one boundParameter and one bindFrom (seed., pendant., warrant. or const:)." .

@@ -313,3 +313,20 @@ visitDate	INFRA
 year	DROP	isReplacedBy	schema:datePublished	
 refines	KEEP	subPropertyOf	prov:wasRevisionOf	revised directive preserves substantial original content and existing obligations while adding precision or narrower admissible behavior; no retirement or priority inference
 contradicts	KEEP	none		same-context instructions cannot jointly be satisfied; records unresolved conflict, not its resolution; no equivalent established by the bounded standards review
+assertedAt	KEEP	none		when the caller says the call happened; Holon asserted clock
+bindFrom	KEEP	none		dotted source path of a Bind: seed., pendant., warrant. or const:
+bindsCommand	KEEP	none		the Command a Bind fixes a parameter of
+boundParameter	KEEP	none		the parameter name a Bind removes from the job's schema
+callOutcome	KEEP	none		receipt outcome: asserted or rejected; not policy effect
+callsCommand	KEEP	none		the Command a CommandCall invokes
+commandName	KEEP	none		dotted interface.verb name of a Command
+competencyQuestion	KEEP	none		the question a Command must answer to load
+irreversible	KEEP	none		a Command declares it has no undo
+parameterShape	KEEP	none		the SHACL node shape of a Command's open payload
+reach	KEEP	none		how far a Command reaches: read, write, act, outward, spend; replaces effect class
+receiptFor	KEEP	none		the CommandCall a Receipt records
+receivedAt	KEEP	none		when the store recorded the call; Holon received clock
+rejectionReason	KEEP	none		why a call was rejected: validation, authorisation, expiry, precondition
+runsVia	KEEP	none		the dispatcher or endpoint that executes a Command
+undoneBy	KEEP	none		the Command that undoes this one
+underWarrant	KEEP	none		the warrant a CommandCall was made under

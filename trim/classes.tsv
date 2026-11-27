@@ -143,7 +143,7 @@ ScheduledJob	KEEP	subClassOf	schema:Action	explicit scheduled-job profile discri
 Command	KEEP	subClassOf	prov:Plan	one governed operation an interface offers; a governed ToolClass, closeMatch WoT ActionAffordance
 CommandCall	KEEP	subClassOf	schema:Action	the closed envelope of one call to a Command; closeMatch Holon CommandEvent
 Bind	KEEP	subClassOf	prov:Entity	fixes one command parameter from the seed, pendant or warrant
-Receipt	KEEP	subClassOf	prov:Entity	signed record of one call: outcome, rejection reason and both clocks
+Receipt	KEEP	subClassOf	prov:Entity	record of one call: outcome, rejection reason and both clocks
 GovernedAsset	KEEP	subClassOf	prov:Entity	governed parent class: a policy targets it and a new kind subclasses it
 GovernedCredential	KEEP	subClassOf	prov:Entity	governed parent class: a policy targets it and a new kind subclasses it
 GovernedMessage	KEEP	subClassOf	schema:Message	governed parent class: a policy targets it and a new kind subclasses it

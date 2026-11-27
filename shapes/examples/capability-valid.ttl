@@ -26,11 +26,12 @@ ex:bind-server a quechua:Bind ;
     quechua:bindFrom "seed.subject" .
 
 ex:call-1 a quechua:CommandCall ;
-    quechua:callsCommand ex:start ; quechua:underWarrant "warrant-1" ;
+    quechua:callsCommand ex:start ; quechua:underWarrant ex:warrant-1 ;
+    quechua:callPayload ex:call-1-payload ;
     schema:expires "2026-11-28T00:00:00Z"^^xsd:dateTime .
 
 ex:call-2 a quechua:CommandCall ;
-    quechua:callsCommand ex:start ; quechua:underWarrant "warrant-1" .
+    quechua:callsCommand ex:start ; quechua:underWarrant ex:warrant-1 .
 
 ex:receipt-1 a quechua:Receipt ;
     quechua:receiptFor ex:call-1 ; quechua:callOutcome "asserted" ;

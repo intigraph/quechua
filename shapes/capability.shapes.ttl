@@ -29,6 +29,7 @@
 # them, which Quipu's schema proposal path checks before a person accepts it.
 
 @prefix quechua: <https://scbrown.github.io/quechua/ns#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix quipu:   <http://quipu.dev/ontology/> .
@@ -65,19 +66,31 @@ quechua:CommandShape a sh:NodeShape ;
     sh:message "A Command needs one dotted commandName, one reach, a runsVia and a competencyQuestion; act/outward/spend need undoneBy or irreversible true; anything beyond read needs governedAt." .
 
 # ── CommandCall ──────────────────────────────────────────────────
-# The closed envelope. The payload is the command's own parameterShape.
+# The closed envelope: a call carries only the properties below (and its
+# rdf:type). Everything a command takes goes in the one callPayload node, whose
+# shape is the command's own parameterShape; the envelope does not open up.
+# SHACL core cannot pick a shape from data, so the payload is checked against
+# parameterShape at the enforcement point, not here.
 quechua:CommandCallShape a sh:NodeShape ;
     quipu:onViolation "reject" ;
     sh:targetClass quechua:CommandCall ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:path quechua:callsCommand ; sh:class quechua:Command ;
                   sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path quechua:underWarrant ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    # A warrant is an entity with its own IRI, never a free string.
+    sh:property [ sh:path quechua:underWarrant ; sh:nodeKind sh:IRI ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path quechua:callPayload ; sh:nodeKind sh:BlankNodeOrIRI ;
+                  sh:maxCount 1 ] ;
     sh:property [ sh:path schema:expires ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ;
-    sh:message "A CommandCall names exactly one callsCommand and one underWarrant." .
+    sh:message "A CommandCall is closed: exactly one callsCommand, one underWarrant IRI, at most one callPayload node and one schema:expires, and nothing else." .
 
 # ── Receipt ──────────────────────────────────────────────────────
 # Every call ends in an assertion or a typed rejection, and a refused call is
-# recorded, never dropped. Both clocks are kept.
+# recorded, never dropped. v0 carries no signature property; signing the
+# receipt is left to the store that writes it.
+# Both clocks are kept.
 quechua:ReceiptShape a sh:NodeShape ;
     quipu:onViolation "reject" ;
     sh:targetClass quechua:Receipt ;
@@ -111,5 +124,5 @@ quechua:BindShape a sh:NodeShape ;
                   sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[a-z][A-Za-z0-9_]*$" ] ;
     sh:property [ sh:path quechua:bindFrom ; sh:datatype xsd:string ;
                   sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:pattern "^((seed|pendant|warrant)\\.[a-z][A-Za-z0-9_.]*|const:.+)$" ] ;
+                  sh:pattern "^((seed|pendant|warrant)(\\.[a-z][A-Za-z0-9_]*)+|const:.+)$" ] ;
     sh:message "A Bind names one bindsCommand, one boundParameter and one bindFrom (seed., pendant., warrant. or const:)." .

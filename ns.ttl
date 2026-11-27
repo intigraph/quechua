@@ -194,6 +194,7 @@
 <https://scbrown.github.io/quechua/ns#byteCount> a rdf:Property ; rdfs:label "byteCount" ; owl:deprecated true ; rdfs:comment "Deprecated: homelab- or tool-specific, outside the public profile. No public replacement; it remains in the private ontology it came from." .
 <https://scbrown.github.io/quechua/ns#calibrationBasis> a rdf:Property ; rdfs:label "calibrationBasis" .
 <https://scbrown.github.io/quechua/ns#callOutcome> a rdf:Property ; rdfs:label "callOutcome" .
+<https://scbrown.github.io/quechua/ns#callPayload> a rdf:Property ; rdfs:label "callPayload" .
 <https://scbrown.github.io/quechua/ns#callsCommand> a rdf:Property ; rdfs:label "callsCommand" .
 <https://scbrown.github.io/quechua/ns#candidateSource> a rdf:Property ; rdfs:label "candidateSource" .
 <https://scbrown.github.io/quechua/ns#canonicalGraphHash> a rdf:Property ; rdfs:label "canonicalGraphHash" .

@@ -46,6 +46,12 @@ FORBIDDEN = re.compile(
 WORK_ITEM = "work-item-valid.ttl"
 CAMAYOC = "camayoc-valid.ttl"
 ONTOLOGY = "ontology-valid.ttl"
+SHACL_SPARQL = (
+    SH.sparql, SH.SPARQLConstraint, SH.SPARQLTarget, SH.SPARQLTargetType, SH.target,
+    SH.select, SH.ask, SH.validator, SH.nodeValidator, SH.propertyValidator,
+    SH.SPARQLAskValidator, SH.SPARQLSelectValidator, SH.rule, SH.SPARQLRule,
+    SH.declare, SH.prefixes,
+)
 CAPABILITY = "capability-valid.ttl"
 CAP = Namespace("https://example.org/capability/")
 _CAPABILITY_CASES = (
@@ -54,12 +60,17 @@ _CAPABILITY_CASES = (
     ("command-bad-name", (CAP.start, Q.commandName, Literal("games.start")), (CAP.start, Q.commandName, Literal("start")), Q.commandName),
     ("act-without-undo", (CAP.start, Q.undoneBy, CAP.stop), None, None),
     ("act-ungoverned", (CAP.start, Q.governedAt, Literal("PAG")), None, None),
-    ("call-without-warrant", (CAP["call-1"], Q.underWarrant, Literal("warrant-1")), None, Q.underWarrant),
+    ("call-without-warrant", (CAP["call-1"], Q.underWarrant, CAP["warrant-1"]), None, Q.underWarrant),
+    ("call-literal-warrant", (CAP["call-1"], Q.underWarrant, CAP["warrant-1"]), (CAP["call-1"], Q.underWarrant, Literal("warrant-1")), Q.underWarrant),
+    ("call-open-envelope", (CAP["call-1"], Q.callPayload, CAP["call-1-payload"]), (CAP["call-1"], CAP.server, Literal("mc-1")), CAP.server),
+    ("call-literal-payload", (CAP["call-1"], Q.callPayload, CAP["call-1-payload"]), (CAP["call-1"], Q.callPayload, Literal("server=mc-1")), Q.callPayload),
     ("receipt-unknown-outcome", (CAP["receipt-1"], Q.callOutcome, Literal("asserted")), (CAP["receipt-1"], Q.callOutcome, Literal("done")), Q.callOutcome),
     ("rejection-without-reason", (CAP["receipt-2"], Q.rejectionReason, Literal("authorisation")), None, None),
     ("rejection-unknown-reason", (CAP["receipt-2"], Q.rejectionReason, Literal("authorisation")), (CAP["receipt-2"], Q.rejectionReason, Literal("timeout")), Q.rejectionReason),
     ("assertion-with-reason", (CAP["receipt-1"], Q.callOutcome, Literal("asserted")), (CAP["receipt-1"], Q.rejectionReason, Literal("expiry")), None),
     ("receipt-one-clock", (CAP["receipt-1"], Q.receivedAt, Literal("2026-11-27T01:00:02Z", datatype=XSD.dateTime)), None, Q.receivedAt),
+    ("bind-double-dot", (CAP["bind-server"], Q.bindFrom, Literal("seed.subject")), (CAP["bind-server"], Q.bindFrom, Literal("seed.a..b")), Q.bindFrom),
+    ("bind-trailing-dot", (CAP["bind-server"], Q.bindFrom, Literal("seed.subject")), (CAP["bind-server"], Q.bindFrom, Literal("seed.subject.")), Q.bindFrom),
     ("bind-free-expression", (CAP["bind-server"], Q.bindFrom, Literal("seed.subject")), (CAP["bind-server"], Q.bindFrom, Literal("lookup(seed)")), Q.bindFrom),
 )
 CAPABILITY_CASES = tuple((CAPABILITY, *case) for case in _CAPABILITY_CASES)
@@ -340,8 +351,9 @@ def check_terms(path: Path, shapes: Graph, classes: set, properties: set, root: 
     if match := FORBIDDEN.search(text):
         raise ValueError(f"{path.name}: private name {match.group(0)!r}")
     shape_names = set(shapes.subjects(RDF.type, SH.NodeShape))
-    # SHACL core only: Quipu refuses SHACL-SPARQL and custom targets.
-    for refused in (SH.sparql, SH.SPARQLConstraint, SH.SPARQLTarget, SH.target, SH.select, SH.ask):
+    # SHACL core only: Quipu refuses SHACL-SPARQL, custom targets and
+    # validators, SHACL rules and SPARQL prefix declarations.
+    for refused in SHACL_SPARQL:
         if (None, refused, None) in shapes or (None, None, refused) in shapes:
             raise ValueError(f"{path.name}: SHACL-SPARQL is refused: {refused}")
     with (root / "vocab/SOURCES.tsv").open() as handle:
@@ -485,6 +497,29 @@ def selftest(root: Path) -> None:
                 print(f"Rejected invalid shapes: {name}")
             else:
                 raise ValueError(f"control {name} was accepted")
+    # SHACL-SPARQL controls: each must be refused for that reason, not another.
+    capability = root / "shapes" / "capability.shapes.ttl"
+    base = capability.read_text()
+    sparql_mutations = (
+        ("sparql-constraint", 'quechua:CommandShape sh:sparql [ a sh:SPARQLConstraint ; sh:select "SELECT $this WHERE { }" ] .'),
+        ("sparql-target", 'quechua:CommandShape sh:target [ a sh:SPARQLTarget ; sh:select "SELECT ?this WHERE { }" ] .'),
+        ("sparql-validator", 'quechua:CommandShape sh:validator [ a sh:SPARQLAskValidator ; sh:ask "ASK { }" ] .'),
+        ("select-validator", 'quechua:CommandShape sh:nodeValidator [ a sh:SPARQLSelectValidator ] .'),
+        ("sparql-rule", 'quechua:CommandShape sh:rule [ a sh:SPARQLRule ; sh:construct "CONSTRUCT { } WHERE { }" ] .'),
+        ("sparql-prefixes", 'quechua:CommandShape sh:prefixes quechua:CommandShape . quechua:CommandShape sh:declare [ sh:prefix "q" ] .'),
+    )
+    for name, extra in sparql_mutations:
+        with tempfile.TemporaryDirectory(prefix="quechua-shapes-") as tmp:
+            scratch = Path(tmp) / capability.name
+            scratch.write_text(base + "\n" + extra + "\n")
+            try:
+                check_terms(scratch, Graph().parse(scratch), classes, properties, root)
+            except ValueError as error:
+                if "SHACL-SPARQL is refused" not in str(error):
+                    raise ValueError(f"control {name} was refused for another reason: {error}")
+                print(f"Rejected invalid shapes: {name}")
+            else:
+                raise ValueError(f"control {name} was accepted")
     data_catalog = root / "shapes" / "data-catalog.shapes.ttl"
     if data_catalog.is_file():
         text = data_catalog.read_text()
@@ -505,7 +540,7 @@ def selftest(root: Path) -> None:
                     print(f"Rejected invalid shapes: {name}")
                 else:
                     raise ValueError(f"control {name} was accepted")
-    print(f"{len(mutations)} existing invalid-shapes controls rejected; public catalog controls checked")
+    print(f"{len(mutations)} existing invalid-shapes controls rejected; {len(sparql_mutations)} SHACL-SPARQL controls rejected; public catalog controls checked")
 
 
 if __name__ == "__main__":

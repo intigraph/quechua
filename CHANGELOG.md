@@ -10,6 +10,18 @@ documentation fix is PATCH.
 `<https://scbrown.github.io/quechua/ns>`). CI refuses a version with no section
 here, and each release publishes that section as its notes.
 
+## [0.14.0](https://github.com/intigraph/quechua/compare/v0.13.0...v0.14.0) (2026-11-27)
+
+
+### Features
+
+* **capability:** commands, calls, binds and receipts vocabulary and shapes v0 ([#55](https://github.com/intigraph/quechua/issues/55)) ([37c99d4](https://github.com/intigraph/quechua/commit/37c99d41c47c03e5ed5f3ee6b77c5e8c0e8bf813))
+
+
+### Bug Fixes
+
+* **share:** surface the failing tool's stderr when a publish command fails ([#53](https://github.com/intigraph/quechua/issues/53)) ([83a34da](https://github.com/intigraph/quechua/commit/83a34dab445d8ab07707826cc00366a971a9a30a))
+
 ## [0.13.0](https://github.com/intigraph/quechua/compare/v0.12.3...v0.13.0) (2026-11-14)
 
 
